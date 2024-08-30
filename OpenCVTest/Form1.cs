@@ -359,6 +359,7 @@ namespace OpenCVTest
                     Ca3Flag = false;
                     cvsInSightDisplay1.InSight.LiveAcquisition = false;
                     video.Dispose();
+                    frame.Dispose();
 
                 }
 
