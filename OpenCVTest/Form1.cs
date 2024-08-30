@@ -358,6 +358,8 @@ namespace OpenCVTest
                     btnCheck.Checked = false;
                     Ca3Flag = false;
                     cvsInSightDisplay1.InSight.LiveAcquisition = false;
+                    video.Dispose();
+
                 }
 
             }
