@@ -83,7 +83,6 @@ namespace OpenCVTest
             this.hScrollBar1.Maximum += this.hScrollBar1.LargeChange - 1;
 
             pictureBox1.DoubleClick += PictureBox1_DoubleClick;
-
         }
 
         private int Bc_eventClose()
@@ -376,7 +375,7 @@ namespace OpenCVTest
 
                     _HostSensor = null;
                     cvsInSightDisplay1.Disconnect();
-
+                    cvsInSightDisplay1.Dispose();
                 }
 
             }
@@ -389,7 +388,7 @@ namespace OpenCVTest
         {
             try
             {
-                if (video != null && Ca3Flag == false)
+                if ((video != null && Ca1Flag == true) || (video != null && Ca2Flag == true))
                 {
                     video.Read(frame);
                     result = frame;
@@ -398,6 +397,10 @@ namespace OpenCVTest
 
                     hScrollBar1.Value = 100;
                     ScaleValue.Text = $"{hScrollBar1.Value.ToString()}%";
+
+                    video.Dispose();
+                    frame.Dispose();
+
                 }
                 else
                 if (img1 != null && Ca3Flag == true)
@@ -412,9 +415,8 @@ namespace OpenCVTest
                     btnCheck.Checked = false;
                     Ca3Flag = false;
                     cvsInSightDisplay1.InSight.LiveAcquisition = false;
-                    video.Dispose();
-                    frame.Dispose();
 
+                    cvsInSightDisplay1.Dispose();
                 }
 
             }

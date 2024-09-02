@@ -1,6 +1,10 @@
 ﻿using OpenCvSharp;
 using System;
-using static OpenCvSharp.LineIterator;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Windows.Documents;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OpenCVTest
 {
@@ -307,29 +311,132 @@ namespace OpenCVTest
             return morp;
         }
 
+        // 원 검출
         public Mat CircleDetection(Mat src)
         {
             gray = new Mat();
             Mat dst = src.Clone();
 
-            // 
+            // 3x3 크기의 사각형 구조
             Mat kernel = Cv2.GetStructuringElement(MorphShapes.Rect, new Size(3, 3));
+
+            // 그레이스케일 변환
             Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+
+            // 이미지를 팽창
             Cv2.Dilate(gray, gray, kernel, new Point(-1, -1), 3);
+
+            // 가우시안 블러 적용
             Cv2.GaussianBlur(gray, gray, new Size(13, 13), 3, 3, BorderTypes.Default);
+
+            // 침식으로 연산
             Cv2.Erode(gray, gray, kernel, new Point(-1, -1), 3);
 
+            // 원 검출할 이미지, 가장자리 정보와 중심점을 모두 사용하여 원 검출, 입출력 이미지의 해상도 비율
+            // 검출할 원의 최소 거리, 케니엣지 임계값, 검출할 원의 최소 중심 강도, 최소 및 최대 반지름(0입력 시 자동으로 반지름을 설정)
             CircleSegment[] circles = Cv2.HoughCircles(gray, HoughModes.Gradient, 1, 100, 100, 35, 0, 0);
 
+            Random rand = new Random();
+
+            // 검출된 이미지 표시
             for (int i = 0; i < circles.Length; i++)
             {
-                Point center = new Point(circles[i].Center.X, circles[i].Center.Y);
+                //Point center = new Point(circles[i].Center.X, circles[i].Center.Y);
 
-                Cv2.Circle(dst, center, (int)circles[i].Radius, Scalar.White, 3);
+                //// 이미지에 검출된 원 그리기, 원의 중심, 원의 반지름, 색상, 원의 두께
+                //Cv2.Circle(dst, center, (int)circles[i].Radius, Scalar.White, 3);
+
+                //// 이미지에 검출된 원 그리기, 원의 중심, 원의 반지름, 색상, 원을 채워서 그림
+                //Cv2.Circle(dst, center, 5, Scalar.AntiqueWhite, Cv2.FILLED);
+
+                Point center = new Point(circles[i].Center.X, circles[i].Center.Y);
+                int radius = (int)circles[i].Radius;
+
+                // 원을 그리기
+                Cv2.Circle(dst, center, radius, Scalar.White, 3);
                 Cv2.Circle(dst, center, 5, Scalar.AntiqueWhite, Cv2.FILLED);
+
+                // 색상 빈도수를 기록하기 위한 딕셔너리
+                var colorFrequency = new Dictionary<(int, int, int), int>();
+
+                for (int j = 0; j < 20; j++) // 20개의 난수 포인트 생성
+                {
+                    // 난수로 원 안의 위치를 생성
+                    double angle = rand.NextDouble() * 2 * Math.PI; // 0에서 2π 사이의 난수 각도
+                    double distance = rand.NextDouble() * radius; // 0에서 원 반지름 사이의 난수 거리
+
+                    // 원의 중심을 기준으로 X, Y 위치 계산
+                    int x = center.X + (int)(distance * Math.Cos(angle));
+                    int y = center.Y + (int)(distance * Math.Sin(angle));
+
+                    Point randomPoint = new Point(x, y);
+
+                    // 이미지의 좌표가 유효한지 확인
+                    if (randomPoint.X >= 0 && randomPoint.X < dst.Cols && randomPoint.Y >= 0 && randomPoint.Y < dst.Rows)
+                    {
+                        // 원 안의 난수 위치에서 색상 추출
+                        Vec3b colorVec = dst.At<Vec3b>(randomPoint.Y, randomPoint.X);
+
+                        // BGR 색상 튜플로 변환
+                        var color = (colorVec.Item2, colorVec.Item1, colorVec.Item0);
+
+                        // 색상 빈도수 업데이트
+                        if (colorFrequency.ContainsKey(color))
+                        {
+                            colorFrequency[color]++;
+                        }
+                        else
+                        {
+                            colorFrequency[color] = 1;
+                        }
+                    }
+                }
+
+                // 가장 빈도가 높은 색상 찾기
+                var mostFrequentColor = colorFrequency.OrderByDescending(cf => cf.Value).FirstOrDefault().Key;
+                int mostFrequentB = mostFrequentColor.Item1;
+                int mostFrequentG = mostFrequentColor.Item2;
+                int mostFrequentR = mostFrequentColor.Item3;
+
+                // 색상 이름 결정
+                string colorName = GetColorName(mostFrequentR, mostFrequentG, mostFrequentB);
+
+                // 평균 RGB 값을 텍스트로 변환
+                string colorText = $"R:{mostFrequentR}, G:{mostFrequentG}, B:{mostFrequentB}";
+
+                // 텍스트를 사용하여 색상 정보를 이미지에 표시
+                Point textPoint = new Point(center.X - 50, center.Y + radius + 10); // 원 아래에 표시
+                Cv2.PutText(dst, colorText, textPoint, HersheyFonts.HersheySimplex, 0.5, Scalar.White, 1);
+                Cv2.PutText(dst, colorName, new Point(textPoint.X, textPoint.Y + 20), HersheyFonts.HersheySimplex, 0.5, Scalar.White, 1);
             }
+        
 
             return dst;
+        }
+
+
+        // 색상 이름을 결정하는 메서드
+        private string GetColorName(int r, int g, int b)
+        {
+            // 색상 이름 결정 로직
+            if (r > 200 && g < 100 && b < 100)
+                return "Red";
+            if (r < 100 && g > 200 && b < 100)
+                return "Green";
+            if (r < 100 && g < 100 && b > 200)
+                return "Blue";
+            if (r > 200 && g > 200 && b < 100)
+                return "Yellow";
+            if (r > 200 && g < 100 && b > 200)
+                return "Magenta";
+            if (r < 100 && g > 200 && b > 200)
+                return "Cyan";
+            if (r > 200 && g > 200 && b > 200)
+                return "White";
+            if (r < 100 && g < 100 && b < 100)
+                return "Black";
+            // Default
+            return "Unknown";
         }
 
     }
