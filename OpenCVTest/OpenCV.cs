@@ -24,7 +24,7 @@ namespace OpenCVTest
         {
 
             gray = new Mat(src.Size(), MatType.CV_8UC1);
-            Cv2.CvtColor(src, gray, ColorConversionCodes.RGBA2GRAY);
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
             return gray;
         }
 
@@ -34,7 +34,7 @@ namespace OpenCVTest
         public Mat BinaryA(Mat src)
         {
             gray = new Mat(src.Size(), MatType.CV_8UC1);
-            Cv2.CvtColor(src, gray, ColorConversionCodes.RGBA2GRAY);
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
 
             int pixel = Cv2.GetTrackbarPos("임계치", "Binary");
             binary = new Mat(src.Size(), MatType.CV_8UC1, new Scalar(pixel, pixel, pixel));
@@ -60,7 +60,7 @@ namespace OpenCVTest
             gray = new Mat(src.Size(), MatType.CV_8UC1);
 
             Cv2.CopyTo(src, corner);
-            Cv2.CvtColor(src, gray, ColorConversionCodes.RGBA2GRAY);
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
 
             // 입력 이미지, 코너의 최대 개수, 코너의 조건 (0.01 * 1000 = 퀄리티 레벨 * 강도) 10보다 이상일때 코너로 간주, 최소거리
             // 코너가 감지되는 영역, 코너 계산을 위한 평균 블록의 크기, Harris 방법을 사용할지에 대한 bool값, Harris 방법의 매개 변수
@@ -90,7 +90,7 @@ namespace OpenCVTest
         {
             bin = new Mat(src.Size(), MatType.CV_8UC1);
             gray = new Mat(src.Size(), MatType.CV_8UC1);
-            Cv2.CvtColor(src, gray, ColorConversionCodes.RGBA2GRAY);
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
             Cv2.Threshold(gray, bin, 190, 255, ThresholdTypes.Binary);
             return bin;
         }
@@ -132,7 +132,7 @@ namespace OpenCVTest
             return apcon;
         }
 
-        public Mat AffineImage(Mat src)
+        public Mat GeometricImage(Mat src)
         {
             affine = new Mat(src.Size(), MatType.CV_8UC3);
 
@@ -197,7 +197,7 @@ namespace OpenCVTest
         {
             bin = new Mat(src.Size(), MatType.CV_8UC1);
             gray = new Mat(src.Size(), MatType.CV_8UC1);
-            Cv2.CvtColor(src, gray, ColorConversionCodes.RGBA2GRAY);
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
             Cv2.Threshold(gray, bin, threshold, 255, ThresholdTypes.Binary);
             return bin;
         }
@@ -305,7 +305,32 @@ namespace OpenCVTest
             Cv2.MorphologyEx(bin, morp, MorphTypes.HitMiss, kernel, iterations: 3);
 
             return morp;
-
         }
+
+        public Mat CircleDetection(Mat src)
+        {
+            gray = new Mat();
+            Mat dst = src.Clone();
+
+            // 
+            Mat kernel = Cv2.GetStructuringElement(MorphShapes.Rect, new Size(3, 3));
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+            Cv2.Dilate(gray, gray, kernel, new Point(-1, -1), 3);
+            Cv2.GaussianBlur(gray, gray, new Size(13, 13), 3, 3, BorderTypes.Default);
+            Cv2.Erode(gray, gray, kernel, new Point(-1, -1), 3);
+
+            CircleSegment[] circles = Cv2.HoughCircles(gray, HoughModes.Gradient, 1, 100, 100, 35, 0, 0);
+
+            for (int i = 0; i < circles.Length; i++)
+            {
+                Point center = new Point(circles[i].Center.X, circles[i].Center.Y);
+
+                Cv2.Circle(dst, center, (int)circles[i].Radius, Scalar.White, 3);
+                Cv2.Circle(dst, center, 5, Scalar.AntiqueWhite, Cv2.FILLED);
+            }
+
+            return dst;
+        }
+
     }
 }

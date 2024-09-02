@@ -38,7 +38,7 @@ namespace OpenCVTest
         private string SensorAddress;
 
         // 카메라1,2,3 / 그레이스케일 / 트리거
-        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag;
+        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag, BlurFlag;
 
         private RibbonCheckBox btnCheck;
 
@@ -57,12 +57,14 @@ namespace OpenCVTest
         Bitmap img1;
 
         OpenCV openCV = new OpenCV();
+        OpenCVBlur blur = new OpenCVBlur();
         OpenCVEdit openCVEdit = new OpenCVEdit();
         CoordinatesXY xy = new CoordinatesXY();
 
         OpenFileDialog ofd = new OpenFileDialog();
 
         UserControlForm ucf;
+        BlurControl bc;
 
         public Form1()
         {
@@ -82,6 +84,58 @@ namespace OpenCVTest
 
             pictureBox1.DoubleClick += PictureBox1_DoubleClick;
 
+        }
+
+        private int Bc_eventClose()
+        {
+            // BlurControl이 있으면 지우고 메모리 해제
+            if (panel2.Controls.Contains(bc))
+            {
+                panel2.Controls.Remove(bc);
+                bc.Dispose();
+            }
+            return 0;
+        }
+
+        private int Bc_eventReturn()
+        {
+            SymmetryReturn();
+            return 0;
+        }
+
+        private int Bc_eventBilateralFilter()
+        {
+            pictureBox1.Image = blur.btnBilateralFilter(result).ToBitmap();
+
+            return 0;
+        }
+
+        private int Bc_eventGaussianBlur()
+        {
+            pictureBox1.Image = blur.btnGaussianBlur(result).ToBitmap();
+
+            return 0;
+        }
+
+        private int Bc_eventMedianBlur()
+        {
+            pictureBox1.Image = blur.btnMedianBlur(result).ToBitmap();
+
+            return 0;
+        }
+
+        private int Bc_eventBoxFilter()
+        {
+            pictureBox1.Image = blur.btnBoxFilter(result).ToBitmap();
+
+            return 0;
+        }
+
+        private int Bc_eventBlur()
+        {
+            pictureBox1.Image = blur.btnBlur(result).ToBitmap();
+
+            return 0;
         }
 
         private int Ucf_eventClose()
@@ -105,7 +159,7 @@ namespace OpenCVTest
 
         private int Ucf_eventSender()
         {
-            pictureBox1.Image = openCV.AffineImage(result).ToBitmap();
+            pictureBox1.Image = openCV.GeometricImage(result).ToBitmap();
             return 0;
         }
 
@@ -625,6 +679,41 @@ namespace OpenCVTest
 
         }
 
+        private void btnBlur_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                if (BlurFlag == false || bc.IsDisposed)
+                {
+                    BlurFlag = true;
+                    bc = new BlurControl();
+                    panel2.Controls.Add(bc);
+
+                    bc.eventBlur += Bc_eventBlur;
+                    bc.eventBoxFilter += Bc_eventBoxFilter;
+                    bc.eventMedianBlur += Bc_eventMedianBlur;
+                    bc.eventGaussianBlur += Bc_eventGaussianBlur;
+                    bc.eventBilateralFilter += Bc_eventBilateralFilter;
+                    bc.eventClose += Bc_eventClose;
+                    bc.eventReturn += Bc_eventReturn;
+                }
+                else
+                {
+                    BlurFlag = false;
+
+                    if (panel2.Controls.Contains(bc))
+                    {
+                        panel2.Controls.Remove((bc));
+                        bc.Dispose();
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
         private void Expansion_Click(object sender, EventArgs e)
         {
             // 기본 임계값
@@ -720,7 +809,7 @@ namespace OpenCVTest
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             // pictrurebox 클릭으로 좌표 얻었을때
-            if (pictureBox1.Image != null)
+            if (pictureBox1.Image != null && AffineFlag == true)
             {
                 XYCount++;
 
@@ -941,12 +1030,23 @@ namespace OpenCVTest
             }
         }
 
+        private void btnCircleDetection_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+                pictureBox1.Image = openCV.CircleDetection(result).ToBitmap();
+            else
+                return;
+        }
+
         int a, b;
         private void btnRibbonEnglish_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
                 Bitmap img = new Bitmap(pictureBox1.Image);
+
+
+
                 var ocr = new TesseractEngine("./tessdata", "eng", EngineMode.TesseractAndCube);
                 var texts = ocr.Process(img);
 
