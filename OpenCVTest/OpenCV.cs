@@ -324,62 +324,97 @@ namespace OpenCVTest
             Yellow,
             Green,
             Blue,
-            White,
+            Cyan,
             Pink,
             Magenta,
-            Cyan
+            White
         }
 
+            
         public Scalar GetColorScalar(string colorName)
         {
+            // Vec3b = 3개의 byte를 가진 벡터이고, 이미지 색상 정보를 표현하는데 사용
+            // Item0 = Blue
+            // Item1 = Green
+            // Item2 = Red
+            Vec3b hsvColor;
+
             switch (colorName)
             {
                 case "Red":
-                    return new Scalar(0, 255, 255);
+                    // B = 0, G = 255, R = 255
+                    hsvColor = new Vec3b(0, 255, 255);
+                    break;
                 case "Orange":
-                    return new Scalar(15, 255, 255);
+                    hsvColor = new Vec3b(15, 255, 255);
+                    break;
                 case "Yellow":
-                    return new Scalar(30, 255, 255);
+                    hsvColor = new Vec3b(30, 255, 255);
+                    break;
                 case "Green":
-                    return new Scalar(60, 255, 128);
+                    hsvColor = new Vec3b(60, 255, 255);
+                    break;
                 case "Blue":
-                    return new Scalar(120, 255, 255);
+                    hsvColor = new Vec3b(120, 255, 255);
+                    break;
+                case "Cyan":
+                    hsvColor = new Vec3b(90, 255, 255);
+                    break;
+                case "Pink":
+                    hsvColor = new Vec3b(150, 128, 255);
+                    break;
+                case "Magenta":
+                    hsvColor = new Vec3b(150, 200, 255);
+                    break;
                 case "White":
                     return new Scalar(255, 255, 255);
-                case "Pink":
-                    return new Scalar(150, 128, 255);
-                case "Cyan":
-                    return new Scalar(90, 255, 128);
-                case "Magenta":
-                    return new Scalar(150, 200, 255);
                 default:
                     return new Scalar(0, 0, 0);
             }
+
+            // HSV -> BGR로 변환
+            Mat hsv = new Mat(1, 1, MatType.CV_8UC3, new Scalar(hsvColor.Item0, hsvColor.Item1, hsvColor.Item2));
+            Mat bgr = new Mat();
+            Cv2.CvtColor(hsv, bgr, ColorConversionCodes.HSV2BGR);
+
+            // 좌표 위치에 픽셀값을 Vec3b 타입으로 반환
+            // BGR로 변환된 BGR 색상 값을 읽어온다
+            Vec3b bgrColor = bgr.At<Vec3b>(0, 0);
+
+            // Scalar 객체로 반환
+            return new Scalar(bgrColor.Item0, bgrColor.Item1, bgrColor.Item2);
         }
 
         public void AnalyzeColor(Mat src)
         {
             Mat hsvImage = new Mat();
+            // 이미지를 HSV로 변환 하여 hsvImage에 저장
             Cv2.CvtColor(src, hsvImage, ColorConversionCodes.BGR2HSV);
 
+            // 색상 카운트 배열을 0으로 초기화
             Array.Clear(colorCounts, 0, colorCounts.Length);
 
+            // 무작위로 100개의 픽셀을 선택하여 색상 분석
             for (int i = 0; i < 100; i++)
             {
+                // 랜덤으로 x, y 좌표를 선택
                 int wNum = random.Next(hsvImage.Cols);
                 int hNum = random.Next(hsvImage.Rows);
                 Vec3b hsvColor = hsvImage.At<Vec3b>(hNum, wNum);
 
+                // HSV 값
                 byte hue = hsvColor.Item0;
                 byte saturation = hsvColor.Item1;
                 byte value = hsvColor.Item2;
 
+                // 채도, 명도
                 if (saturation < 10 && value > 200)
                 {
                     colorCounts[(int)colorNames.White]++;
                 }
                 else
                 {
+                    // 색상 카운트
                     if ((hue >= 0 && hue <= 10) || (hue >= 170 && hue <= 180)) // Red
                         colorCounts[(int)colorNames.Red]++;
                     else if (hue >= 11 && hue <= 25) // Orange
@@ -399,7 +434,9 @@ namespace OpenCVTest
                 }
             }
 
+            // 가장 많이 나타난 색상의 수를 찾기
             int maxIndex = Array.IndexOf(colorCounts, colorCounts.Max());
+            // enum에서 인덱스를 사용 색상을 찾는다
             maxColor = Enum.GetName(typeof(colorNames), maxIndex);
             biggestColor = $"{maxColor} : {colorCounts[maxIndex]}%";
 
