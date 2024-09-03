@@ -83,6 +83,16 @@ namespace OpenCVTest.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap _2071669 {
+            get {
+                object obj = ResourceManager.GetObject("2071669", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap _321321 {
             get {
                 object obj = ResourceManager.GetObject("321321", resourceCulture);
@@ -226,6 +236,16 @@ namespace OpenCVTest.Properties {
         internal static System.Drawing.Bitmap asd {
             get {
                 object obj = ResourceManager.GetObject("asd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap bokeh_blur_icon_98626 {
+            get {
+                object obj = ResourceManager.GetObject("bokeh-blur-icon-98626", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

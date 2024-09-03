@@ -241,6 +241,8 @@
     <None Include="Resources\d27d6f4f23477f8939bc6762d4987c44.png" />
     <None Include="Resources\dsadsa.png" />
     <None Include="Resources\dwqfew.png" />
+    <None Include="Resources\bokeh-blur-icon-98626.png" />
+    <None Include="Resources\2071669.png" />
     <Content Include="x64\liblept172.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

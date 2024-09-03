@@ -26,7 +26,6 @@ namespace OpenCVTest
         // 영상이나 이미지의 색상을 흑백 색상으로 변환하기 위해 사용
         public Mat GrayScale(Mat src)
         {
-
             gray = new Mat(src.Size(), MatType.CV_8UC1);
             Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
             return gray;
@@ -317,7 +316,7 @@ namespace OpenCVTest
         private Mat circle;
 
         private readonly Random random = new Random();
-        private readonly int[] colorCounts = new int[7];
+        private readonly int[] colorCounts = new int[9];
         private enum colorNames
         {
             Red,
@@ -326,7 +325,86 @@ namespace OpenCVTest
             Green,
             Blue,
             White,
-            Pink
+            Pink,
+            Magenta,
+            Cyan
+        }
+
+        public Scalar GetColorScalar(string colorName)
+        {
+            switch (colorName)
+            {
+                case "Red":
+                    return new Scalar(0, 255, 255);
+                case "Orange":
+                    return new Scalar(15, 255, 255);
+                case "Yellow":
+                    return new Scalar(30, 255, 255);
+                case "Green":
+                    return new Scalar(60, 255, 128);
+                case "Blue":
+                    return new Scalar(120, 255, 255);
+                case "White":
+                    return new Scalar(255, 255, 255);
+                case "Pink":
+                    return new Scalar(150, 128, 255);
+                case "Cyan":
+                    return new Scalar(90, 255, 128);
+                case "Magenta":
+                    return new Scalar(150, 200, 255);
+                default:
+                    return new Scalar(0, 0, 0);
+            }
+        }
+
+        public void AnalyzeColor(Mat src)
+        {
+            Mat hsvImage = new Mat();
+            Cv2.CvtColor(src, hsvImage, ColorConversionCodes.BGR2HSV);
+
+            Array.Clear(colorCounts, 0, colorCounts.Length);
+
+            for (int i = 0; i < 100; i++)
+            {
+                int wNum = random.Next(hsvImage.Cols);
+                int hNum = random.Next(hsvImage.Rows);
+                Vec3b hsvColor = hsvImage.At<Vec3b>(hNum, wNum);
+
+                byte hue = hsvColor.Item0;
+                byte saturation = hsvColor.Item1;
+                byte value = hsvColor.Item2;
+
+                if (saturation < 10 && value > 200)
+                {
+                    colorCounts[(int)colorNames.White]++;
+                }
+                else
+                {
+                    if ((hue >= 0 && hue <= 10) || (hue >= 170 && hue <= 180)) // Red
+                        colorCounts[(int)colorNames.Red]++;
+                    else if (hue >= 11 && hue <= 25) // Orange
+                        colorCounts[(int)colorNames.Orange]++;
+                    else if (hue >= 26 && hue <= 40) // Yellow
+                        colorCounts[(int)colorNames.Yellow]++;
+                    else if (hue >= 41 && hue <= 84) // Green
+                        colorCounts[(int)colorNames.Green]++;
+                    else if (hue >= 85 && hue <= 100) // Blue
+                        colorCounts[(int)colorNames.Blue]++;
+                    else if (hue >= 101 && hue <= 140) // Cyan
+                        colorCounts[(int)colorNames.Cyan]++;
+                    else if (hue >= 141 && hue <= 165) // Pink
+                        colorCounts[(int)colorNames.Pink]++;
+                    else if (hue >= 166 && hue <= 179) // Magenta
+                        colorCounts[(int)colorNames.Magenta]++;
+                }
+            }
+
+            int maxIndex = Array.IndexOf(colorCounts, colorCounts.Max());
+            maxColor = Enum.GetName(typeof(colorNames), maxIndex);
+            biggestColor = $"{maxColor} : {colorCounts[maxIndex]}%";
+
+            colorStr = string.Join("\n\r", Enum.GetValues(typeof(colorNames)).Cast<colorNames>()
+                .Select(color => colorCounts[(int)color] > 0 ? $"{color} : {colorCounts[(int)color]}%" : ""));
         }
 
         public Mat AllCircleColor(Mat src)
@@ -370,78 +448,7 @@ namespace OpenCVTest
 
             }
 
-            circle.Release();
-
             return dst;
-        }
-
-        public Scalar GetColorScalar(string colorName)
-        {
-            switch (colorName)
-            {
-                case "Red":
-                    return new Scalar(0, 255, 255);
-                case "Orange":
-                    return new Scalar(15, 255, 255);
-                case "Yellow":
-                    return new Scalar(30, 255, 255);
-                case "Green":
-                    return new Scalar(60, 255, 128);
-                case "Blue":
-                    return new Scalar(120, 255, 255);
-                case "White":
-                    return new Scalar(255, 255, 255);
-                case "Pink":
-                    return new Scalar(150, 128, 255);
-                default:
-                    return new Scalar(0, 0, 0);
-            }
-        }
-
-        public void AnalyzeColor(Mat src)
-        {
-            Mat hsvImage = new Mat();
-            Cv2.CvtColor(src, hsvImage, ColorConversionCodes.BGR2HSV);
-
-            Array.Clear(colorCounts, 0, colorCounts.Length);
-
-            for (int i = 0; i < 100; i++)
-            {
-                int wNum = random.Next(hsvImage.Cols);
-                int hNum = random.Next(hsvImage.Rows);
-                Vec3b hsvColor = hsvImage.At<Vec3b>(hNum, wNum);
-
-                byte hue = hsvColor.Item0;
-                byte saturation = hsvColor.Item1;
-                byte value = hsvColor.Item2;
-
-                if (saturation < 10 && value > 200)
-                {
-                    colorCounts[(int)colorNames.White]++;
-                }
-                else
-                {
-                    if ((hue >= 0 && hue <= 10) || (hue >= 170 && hue <= 180)) // Red
-                        colorCounts[(int)colorNames.Red]++;
-                    else if (hue >= 11 && hue <= 25) // Orange
-                        colorCounts[(int)colorNames.Orange]++;
-                    else if (hue >= 26 && hue <= 40) // Yellow
-                        colorCounts[(int)colorNames.Yellow]++;
-                    else if (hue >= 41 && hue <= 84) // Green
-                        colorCounts[(int)colorNames.Green]++;
-                    else if (hue >= 85 && hue <= 100) // Blue
-                        colorCounts[(int)colorNames.Blue]++;
-                    else if (hue >= 141 && hue <= 165) // Pink
-                        colorCounts[(int)colorNames.Pink]++;
-                }
-            }
-
-            int maxIndex = Array.IndexOf(colorCounts, colorCounts.Max());
-            maxColor = Enum.GetName(typeof(colorNames), maxIndex);
-            biggestColor = $"{maxColor} : {colorCounts[maxIndex]}%";
-
-            colorStr = string.Join("\n\r", Enum.GetValues(typeof(colorNames)).Cast<colorNames>()
-                .Select(color => colorCounts[(int)color] > 0 ? $"{color} : {colorCounts[(int)color]}%" : ""));
         }
 
 

@@ -629,8 +629,8 @@ namespace OpenCVTest
             // 
             // btnCircleDetection
             // 
-            this.btnCircleDetection.Image = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.Image")));
-            this.btnCircleDetection.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.LargeImage")));
+            this.btnCircleDetection.Image = global::OpenCVTest.Properties.Resources._2071669;
+            this.btnCircleDetection.LargeImage = new Bitmap(global::OpenCVTest.Properties.Resources._2071669, new Size(35,35));
             this.btnCircleDetection.Name = "btnCircleDetection";
             this.btnCircleDetection.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.SmallImage")));
             this.btnCircleDetection.Text = "원검출";
@@ -748,7 +748,6 @@ namespace OpenCVTest
         private System.Windows.Forms.RibbonButton btnRibbonHangul;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RibbonTab ribbonTab4;
-        private System.Windows.Forms.RibbonPanel ribbonPanel10;
         private System.Windows.Forms.RibbonPanel ribbonPanel11;
         private System.Windows.Forms.RibbonButton Expansion;
         private System.Windows.Forms.RibbonButton Erosion;
