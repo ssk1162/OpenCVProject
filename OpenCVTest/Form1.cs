@@ -1035,7 +1035,7 @@ namespace OpenCVTest
         private void btnCircleDetection_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
-                pictureBox1.Image = openCV.CircleDetection(result).ToBitmap();
+                pictureBox1.Image = openCV.AllCircleColor(result).ToBitmap();
             else
                 return;
         }

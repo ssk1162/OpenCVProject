@@ -39,48 +39,40 @@ namespace OpenCVTest
             this.ScaleValue = new System.Windows.Forms.Label();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.ribbon1 = new System.Windows.Forms.Ribbon();
+            this.ribbonOrbOpen = new System.Windows.Forms.RibbonOrbMenuItem();
+            this.ribbonOrbSave = new System.Windows.Forms.RibbonOrbMenuItem();
+            this.ribbonOrbClose = new System.Windows.Forms.RibbonOrbMenuItem();
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbon = new System.Windows.Forms.RibbonButton();
+            this.btnRibbon2 = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbon3 = new System.Windows.Forms.RibbonButton();
             this.cbRibbonLive = new System.Windows.Forms.RibbonCheckBox();
             this.ribbonPanel4 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbonTrigger = new System.Windows.Forms.RibbonButton();
             this.ribbonTab2 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel5 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbonSymmetry = new System.Windows.Forms.RibbonButton();
+            this.btnRibbonSymmetry2 = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel6 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbon45Rotation = new System.Windows.Forms.RibbonButton();
+            this.btnRibbon90Rotation = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel7 = new System.Windows.Forms.RibbonPanel();
+            this.btnRibbonSet = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel8 = new System.Windows.Forms.RibbonPanel();
             this.ribbonUpDown = new System.Windows.Forms.RibbonUpDown();
             this.ribbonTab3 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonTab4 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonTab5 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel9 = new System.Windows.Forms.RibbonPanel();
-            this.cvsInSightDisplay1 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.ribbonTab6 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ribbonOrbOpen = new System.Windows.Forms.RibbonOrbMenuItem();
-            this.ribbonOrbSave = new System.Windows.Forms.RibbonOrbMenuItem();
-            this.ribbonOrbClose = new System.Windows.Forms.RibbonOrbMenuItem();
-            this.btnRibbon = new System.Windows.Forms.RibbonButton();
-            this.btnRibbon2 = new System.Windows.Forms.RibbonButton();
-            this.btnRibbon3 = new System.Windows.Forms.RibbonButton();
-            this.btnRibbonTrigger = new System.Windows.Forms.RibbonButton();
-            this.btnRibbonSymmetry = new System.Windows.Forms.RibbonButton();
-            this.btnRibbonSymmetry2 = new System.Windows.Forms.RibbonButton();
-            this.btnRibbon45Rotation = new System.Windows.Forms.RibbonButton();
-            this.btnRibbon90Rotation = new System.Windows.Forms.RibbonButton();
-            this.btnRibbonSet = new System.Windows.Forms.RibbonButton();
             this.btnRibbonGray = new System.Windows.Forms.RibbonButton();
             this.btnRibbonBinaryization = new System.Windows.Forms.RibbonButton();
             this.btnRibbonCannyEdge = new System.Windows.Forms.RibbonButton();
+            this.ribbonTab4 = new System.Windows.Forms.RibbonTab();
+            this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
             this.btnRibbonCorner = new System.Windows.Forms.RibbonButton();
             this.btnRibbonApproxPoly = new System.Windows.Forms.RibbonButton();
             this.btnRibbonAffine = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
             this.Expansion = new System.Windows.Forms.RibbonButton();
             this.Erosion = new System.Windows.Forms.RibbonButton();
             this.OpenMorphology = new System.Windows.Forms.RibbonButton();
@@ -89,11 +81,19 @@ namespace OpenCVTest
             this.TopHatMorphology = new System.Windows.Forms.RibbonButton();
             this.BlackHatMorphology = new System.Windows.Forms.RibbonButton();
             this.HitMissMorphology = new System.Windows.Forms.RibbonButton();
+            this.ribbonTab5 = new System.Windows.Forms.RibbonTab();
+            this.ribbonPanel9 = new System.Windows.Forms.RibbonPanel();
             this.btnRibbonEnglish = new System.Windows.Forms.RibbonButton();
             this.btnRibbonHangul = new System.Windows.Forms.RibbonButton();
+            this.ribbonTab6 = new System.Windows.Forms.RibbonTab();
+            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
             this.btnBlur = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel14 = new System.Windows.Forms.RibbonPanel();
             this.btnCircleDetection = new System.Windows.Forms.RibbonButton();
+            this.cvsInSightDisplay1 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -177,6 +177,35 @@ namespace OpenCVTest
             this.ribbon1.Tabs.Add(this.ribbonTab6);
             this.ribbon1.TabSpacing = 3;
             // 
+            // ribbonOrbOpen
+            // 
+            this.ribbonOrbOpen.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.ribbonOrbOpen.Image = global::OpenCVTest.Properties.Resources._12217691;
+            this.ribbonOrbOpen.LargeImage = global::OpenCVTest.Properties.Resources._12217691;
+            this.ribbonOrbOpen.Name = "ribbonOrbOpen";
+            this.ribbonOrbOpen.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbOpen.SmallImage")));
+            this.ribbonOrbOpen.Text = "Open";
+            this.ribbonOrbOpen.Click += new System.EventHandler(this.ribbonOrbOpen_Click);
+            // 
+            // ribbonOrbSave
+            // 
+            this.ribbonOrbSave.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.ribbonOrbSave.Image = global::OpenCVTest.Properties.Resources.ewqewq;
+            this.ribbonOrbSave.LargeImage = global::OpenCVTest.Properties.Resources.ewqewq;
+            this.ribbonOrbSave.Name = "ribbonOrbSave";
+            this.ribbonOrbSave.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbSave.SmallImage")));
+            this.ribbonOrbSave.Text = "Save";
+            this.ribbonOrbSave.Click += new System.EventHandler(this.ribbonOrbSave_Click);
+            // 
+            // ribbonOrbClose
+            // 
+            this.ribbonOrbClose.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.ribbonOrbClose.Image = global::OpenCVTest.Properties.Resources._12520057;
+            this.ribbonOrbClose.LargeImage = global::OpenCVTest.Properties.Resources._12520057;
+            this.ribbonOrbClose.Name = "ribbonOrbClose";
+            this.ribbonOrbClose.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbClose.SmallImage")));
+            this.ribbonOrbClose.Text = "Close";
+            // 
             // ribbonTab1
             // 
             this.ribbonTab1.Name = "ribbonTab1";
@@ -193,6 +222,25 @@ namespace OpenCVTest
             this.ribbonPanel1.Name = "ribbonPanel1";
             this.ribbonPanel1.Text = "";
             // 
+            // btnRibbon
+            // 
+            this.btnRibbon.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon.Image")));
+            this.btnRibbon.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon.LargeImage")));
+            this.btnRibbon.Name = "btnRibbon";
+            this.btnRibbon.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon.SmallImage")));
+            this.btnRibbon.Text = "Camera";
+            this.btnRibbon.Click += new System.EventHandler(this.btnRibbon_Click);
+            // 
+            // btnRibbon2
+            // 
+            this.btnRibbon2.Enabled = false;
+            this.btnRibbon2.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.Image")));
+            this.btnRibbon2.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.LargeImage")));
+            this.btnRibbon2.Name = "btnRibbon2";
+            this.btnRibbon2.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.SmallImage")));
+            this.btnRibbon2.Text = "Camera2";
+            this.btnRibbon2.Click += new System.EventHandler(this.btnRibbon2_Click);
+            // 
             // ribbonPanel2
             // 
             this.ribbonPanel2.ButtonMoreVisible = false;
@@ -200,6 +248,16 @@ namespace OpenCVTest
             this.ribbonPanel2.Items.Add(this.cbRibbonLive);
             this.ribbonPanel2.Name = "ribbonPanel2";
             this.ribbonPanel2.Text = "Cognex";
+            // 
+            // btnRibbon3
+            // 
+            this.btnRibbon3.Enabled = false;
+            this.btnRibbon3.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.Image")));
+            this.btnRibbon3.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.LargeImage")));
+            this.btnRibbon3.Name = "btnRibbon3";
+            this.btnRibbon3.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.SmallImage")));
+            this.btnRibbon3.Text = "Camera3";
+            this.btnRibbon3.Click += new System.EventHandler(this.btnRibbon3_Click);
             // 
             // cbRibbonLive
             // 
@@ -214,6 +272,16 @@ namespace OpenCVTest
             this.ribbonPanel4.Items.Add(this.btnRibbonTrigger);
             this.ribbonPanel4.Name = "ribbonPanel4";
             this.ribbonPanel4.Text = "";
+            // 
+            // btnRibbonTrigger
+            // 
+            this.btnRibbonTrigger.Enabled = false;
+            this.btnRibbonTrigger.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.Image")));
+            this.btnRibbonTrigger.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.LargeImage")));
+            this.btnRibbonTrigger.Name = "btnRibbonTrigger";
+            this.btnRibbonTrigger.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.SmallImage")));
+            this.btnRibbonTrigger.Text = "Trigger";
+            this.btnRibbonTrigger.Click += new System.EventHandler(this.btnRibbonTrigger_Click);
             // 
             // ribbonTab2
             // 
@@ -232,6 +300,26 @@ namespace OpenCVTest
             this.ribbonPanel5.Name = "ribbonPanel5";
             this.ribbonPanel5.Text = "방향 전환";
             // 
+            // btnRibbonSymmetry
+            // 
+            this.btnRibbonSymmetry.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.Image")));
+            this.btnRibbonSymmetry.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.LargeImage")));
+            this.btnRibbonSymmetry.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
+            this.btnRibbonSymmetry.Name = "btnRibbonSymmetry";
+            this.btnRibbonSymmetry.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.SmallImage")));
+            this.btnRibbonSymmetry.Text = "X축 대칭";
+            this.btnRibbonSymmetry.Click += new System.EventHandler(this.btnRibbonSymmetry_Click);
+            // 
+            // btnRibbonSymmetry2
+            // 
+            this.btnRibbonSymmetry2.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.Image")));
+            this.btnRibbonSymmetry2.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.LargeImage")));
+            this.btnRibbonSymmetry2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
+            this.btnRibbonSymmetry2.Name = "btnRibbonSymmetry2";
+            this.btnRibbonSymmetry2.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.SmallImage")));
+            this.btnRibbonSymmetry2.Text = "Y축 대칭";
+            this.btnRibbonSymmetry2.Click += new System.EventHandler(this.btnRibbonSymmetry2_Click);
+            // 
             // ribbonPanel6
             // 
             this.ribbonPanel6.ButtonMoreVisible = false;
@@ -240,12 +328,42 @@ namespace OpenCVTest
             this.ribbonPanel6.Name = "ribbonPanel6";
             this.ribbonPanel6.Text = "회전";
             // 
+            // btnRibbon45Rotation
+            // 
+            this.btnRibbon45Rotation.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.Image")));
+            this.btnRibbon45Rotation.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.LargeImage")));
+            this.btnRibbon45Rotation.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
+            this.btnRibbon45Rotation.Name = "btnRibbon45Rotation";
+            this.btnRibbon45Rotation.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.SmallImage")));
+            this.btnRibbon45Rotation.Text = "45˚ 회전";
+            this.btnRibbon45Rotation.Click += new System.EventHandler(this.btnRibbon45Rotation_Click);
+            // 
+            // btnRibbon90Rotation
+            // 
+            this.btnRibbon90Rotation.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.Image")));
+            this.btnRibbon90Rotation.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.LargeImage")));
+            this.btnRibbon90Rotation.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
+            this.btnRibbon90Rotation.Name = "btnRibbon90Rotation";
+            this.btnRibbon90Rotation.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.SmallImage")));
+            this.btnRibbon90Rotation.Text = "90˚ 회전";
+            this.btnRibbon90Rotation.Click += new System.EventHandler(this.btnRibbon90Rotation_Click);
+            // 
             // ribbonPanel7
             // 
             this.ribbonPanel7.ButtonMoreVisible = false;
             this.ribbonPanel7.Items.Add(this.btnRibbonSet);
             this.ribbonPanel7.Name = "ribbonPanel7";
             this.ribbonPanel7.Text = "크기 조절";
+            // 
+            // btnRibbonSet
+            // 
+            this.btnRibbonSet.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.Image")));
+            this.btnRibbonSet.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.LargeImage")));
+            this.btnRibbonSet.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
+            this.btnRibbonSet.Name = "btnRibbonSet";
+            this.btnRibbonSet.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.SmallImage")));
+            this.btnRibbonSet.Text = " 자르기";
+            this.btnRibbonSet.Click += new System.EventHandler(this.btnRibbonSet_Click);
             // 
             // ribbonPanel8
             // 
@@ -278,227 +396,6 @@ namespace OpenCVTest
             this.ribbonPanel3.Name = "ribbonPanel3";
             this.ribbonPanel3.Text = "필터";
             // 
-            // ribbonTab4
-            // 
-            this.ribbonTab4.Name = "ribbonTab4";
-            this.ribbonTab4.Panels.Add(this.ribbonPanel11);
-            this.ribbonTab4.Panels.Add(this.ribbonPanel12);
-            this.ribbonTab4.Text = "알고리즘";
-            // 
-            // ribbonPanel11
-            // 
-            this.ribbonPanel11.ButtonMoreVisible = false;
-            this.ribbonPanel11.Items.Add(this.btnRibbonCorner);
-            this.ribbonPanel11.Items.Add(this.btnRibbonApproxPoly);
-            this.ribbonPanel11.Items.Add(this.btnRibbonAffine);
-            this.ribbonPanel11.Name = "ribbonPanel11";
-            this.ribbonPanel11.Text = "";
-            // 
-            // ribbonPanel12
-            // 
-            this.ribbonPanel12.ButtonMoreVisible = false;
-            this.ribbonPanel12.Items.Add(this.Expansion);
-            this.ribbonPanel12.Items.Add(this.Erosion);
-            this.ribbonPanel12.Items.Add(this.OpenMorphology);
-            this.ribbonPanel12.Items.Add(this.CloseMorphology);
-            this.ribbonPanel12.Items.Add(this.GradientMorphology);
-            this.ribbonPanel12.Items.Add(this.TopHatMorphology);
-            this.ribbonPanel12.Items.Add(this.BlackHatMorphology);
-            this.ribbonPanel12.Items.Add(this.HitMissMorphology);
-            this.ribbonPanel12.Name = "ribbonPanel12";
-            this.ribbonPanel12.Text = "";
-            // 
-            // ribbonTab5
-            // 
-            this.ribbonTab5.Name = "ribbonTab5";
-            this.ribbonTab5.Panels.Add(this.ribbonPanel9);
-            this.ribbonTab5.Text = "명함";
-            // 
-            // ribbonPanel9
-            // 
-            this.ribbonPanel9.ButtonMoreVisible = false;
-            this.ribbonPanel9.Items.Add(this.btnRibbonEnglish);
-            this.ribbonPanel9.Items.Add(this.btnRibbonHangul);
-            this.ribbonPanel9.Name = "ribbonPanel9";
-            this.ribbonPanel9.Text = "판독";
-            // 
-            // cvsInSightDisplay1
-            // 
-            this.cvsInSightDisplay1.DefaultTextScaleMode = Cognex.InSight.Controls.Display.CvsInSightDisplay.TextScaleModeType.Proportional;
-            this.cvsInSightDisplay1.DialogIcon = null;
-            this.cvsInSightDisplay1.Location = new System.Drawing.Point(0, 0);
-            this.cvsInSightDisplay1.Name = "cvsInSightDisplay1";
-            this.cvsInSightDisplay1.PreferredCropScaleMode = Cognex.InSight.Controls.Display.CvsInSightDisplayCropScaleMode.Default;
-            this.cvsInSightDisplay1.Size = new System.Drawing.Size(1280, 960);
-            this.cvsInSightDisplay1.TabIndex = 8;
-            this.cvsInSightDisplay1.Visible = false;
-            this.cvsInSightDisplay1.ResultsChanged += new System.EventHandler(this.cvsInSightDisplay1_ResultsChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.cvsInSightDisplay1);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(9, 222);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1280, 960);
-            this.panel1.TabIndex = 9;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Location = new System.Drawing.Point(1295, 222);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(435, 979);
-            this.panel2.TabIndex = 10;
-            // 
-            // ribbonTab6
-            // 
-            this.ribbonTab6.Name = "ribbonTab6";
-            this.ribbonTab6.Panels.Add(this.ribbonPanel13);
-            this.ribbonTab6.Panels.Add(this.ribbonPanel14);
-            this.ribbonTab6.Text = "색상검출";
-            // 
-            // ribbonPanel13
-            // 
-            this.ribbonPanel13.ButtonMoreVisible = false;
-            this.ribbonPanel13.Items.Add(this.btnBlur);
-            this.ribbonPanel13.Name = "ribbonPanel13";
-            this.ribbonPanel13.Text = "";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1280, 960);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            // 
-            // ribbonOrbOpen
-            // 
-            this.ribbonOrbOpen.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.ribbonOrbOpen.Image = global::OpenCVTest.Properties.Resources._12217691;
-            this.ribbonOrbOpen.LargeImage = global::OpenCVTest.Properties.Resources._12217691;
-            this.ribbonOrbOpen.Name = "ribbonOrbOpen";
-            this.ribbonOrbOpen.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbOpen.SmallImage")));
-            this.ribbonOrbOpen.Text = "Open";
-            this.ribbonOrbOpen.Click += new System.EventHandler(this.ribbonOrbOpen_Click);
-            // 
-            // ribbonOrbSave
-            // 
-            this.ribbonOrbSave.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.ribbonOrbSave.Image = global::OpenCVTest.Properties.Resources.ewqewq;
-            this.ribbonOrbSave.LargeImage = global::OpenCVTest.Properties.Resources.ewqewq;
-            this.ribbonOrbSave.Name = "ribbonOrbSave";
-            this.ribbonOrbSave.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbSave.SmallImage")));
-            this.ribbonOrbSave.Text = "Save";
-            this.ribbonOrbSave.Click += new System.EventHandler(this.ribbonOrbSave_Click);
-            // 
-            // ribbonOrbClose
-            // 
-            this.ribbonOrbClose.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.ribbonOrbClose.Image = global::OpenCVTest.Properties.Resources._12520057;
-            this.ribbonOrbClose.LargeImage = global::OpenCVTest.Properties.Resources._12520057;
-            this.ribbonOrbClose.Name = "ribbonOrbClose";
-            this.ribbonOrbClose.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbClose.SmallImage")));
-            this.ribbonOrbClose.Text = "Close";
-            // 
-            // btnRibbon
-            // 
-            this.btnRibbon.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon.Image")));
-            this.btnRibbon.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon.LargeImage")));
-            this.btnRibbon.Name = "btnRibbon";
-            this.btnRibbon.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon.SmallImage")));
-            this.btnRibbon.Text = "Camera";
-            this.btnRibbon.Click += new System.EventHandler(this.btnRibbon_Click);
-            // 
-            // btnRibbon2
-            // 
-            this.btnRibbon2.Enabled = false;
-            this.btnRibbon2.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.Image")));
-            this.btnRibbon2.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.LargeImage")));
-            this.btnRibbon2.Name = "btnRibbon2";
-            this.btnRibbon2.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon2.SmallImage")));
-            this.btnRibbon2.Text = "Camera2";
-            this.btnRibbon2.Click += new System.EventHandler(this.btnRibbon2_Click);
-            // 
-            // btnRibbon3
-            // 
-            this.btnRibbon3.Enabled = false;
-            this.btnRibbon3.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.Image")));
-            this.btnRibbon3.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.LargeImage")));
-            this.btnRibbon3.Name = "btnRibbon3";
-            this.btnRibbon3.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.SmallImage")));
-            this.btnRibbon3.Text = "Camera3";
-            this.btnRibbon3.Click += new System.EventHandler(this.btnRibbon3_Click);
-            // 
-            // btnRibbonTrigger
-            // 
-            this.btnRibbonTrigger.Enabled = false;
-            this.btnRibbonTrigger.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.Image")));
-            this.btnRibbonTrigger.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.LargeImage")));
-            this.btnRibbonTrigger.Name = "btnRibbonTrigger";
-            this.btnRibbonTrigger.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonTrigger.SmallImage")));
-            this.btnRibbonTrigger.Text = "Trigger";
-            this.btnRibbonTrigger.Click += new System.EventHandler(this.btnRibbonTrigger_Click);
-            // 
-            // btnRibbonSymmetry
-            // 
-            this.btnRibbonSymmetry.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.Image")));
-            this.btnRibbonSymmetry.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.LargeImage")));
-            this.btnRibbonSymmetry.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
-            this.btnRibbonSymmetry.Name = "btnRibbonSymmetry";
-            this.btnRibbonSymmetry.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry.SmallImage")));
-            this.btnRibbonSymmetry.Text = "X축 대칭";
-            this.btnRibbonSymmetry.Click += new System.EventHandler(this.btnRibbonSymmetry_Click);
-            // 
-            // btnRibbonSymmetry2
-            // 
-            this.btnRibbonSymmetry2.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.Image")));
-            this.btnRibbonSymmetry2.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.LargeImage")));
-            this.btnRibbonSymmetry2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
-            this.btnRibbonSymmetry2.Name = "btnRibbonSymmetry2";
-            this.btnRibbonSymmetry2.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSymmetry2.SmallImage")));
-            this.btnRibbonSymmetry2.Text = "Y축 대칭";
-            this.btnRibbonSymmetry2.Click += new System.EventHandler(this.btnRibbonSymmetry2_Click);
-            // 
-            // btnRibbon45Rotation
-            // 
-            this.btnRibbon45Rotation.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.Image")));
-            this.btnRibbon45Rotation.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.LargeImage")));
-            this.btnRibbon45Rotation.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
-            this.btnRibbon45Rotation.Name = "btnRibbon45Rotation";
-            this.btnRibbon45Rotation.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon45Rotation.SmallImage")));
-            this.btnRibbon45Rotation.Text = "45˚ 회전";
-            this.btnRibbon45Rotation.Click += new System.EventHandler(this.btnRibbon45Rotation_Click);
-            // 
-            // btnRibbon90Rotation
-            // 
-            this.btnRibbon90Rotation.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.Image")));
-            this.btnRibbon90Rotation.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.LargeImage")));
-            this.btnRibbon90Rotation.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
-            this.btnRibbon90Rotation.Name = "btnRibbon90Rotation";
-            this.btnRibbon90Rotation.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon90Rotation.SmallImage")));
-            this.btnRibbon90Rotation.Text = "90˚ 회전";
-            this.btnRibbon90Rotation.Click += new System.EventHandler(this.btnRibbon90Rotation_Click);
-            // 
-            // btnRibbonSet
-            // 
-            this.btnRibbonSet.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.Image")));
-            this.btnRibbonSet.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.LargeImage")));
-            this.btnRibbonSet.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
-            this.btnRibbonSet.Name = "btnRibbonSet";
-            this.btnRibbonSet.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonSet.SmallImage")));
-            this.btnRibbonSet.Text = " 자르기";
-            this.btnRibbonSet.Click += new System.EventHandler(this.btnRibbonSet_Click);
-            // 
             // btnRibbonGray
             // 
             this.btnRibbonGray.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonGray.Image")));
@@ -525,6 +422,22 @@ namespace OpenCVTest
             this.btnRibbonCannyEdge.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonCannyEdge.SmallImage")));
             this.btnRibbonCannyEdge.Text = "케니에지";
             this.btnRibbonCannyEdge.Click += new System.EventHandler(this.btnRibbonCannyEdge_Click);
+            // 
+            // ribbonTab4
+            // 
+            this.ribbonTab4.Name = "ribbonTab4";
+            this.ribbonTab4.Panels.Add(this.ribbonPanel11);
+            this.ribbonTab4.Panels.Add(this.ribbonPanel12);
+            this.ribbonTab4.Text = "알고리즘";
+            // 
+            // ribbonPanel11
+            // 
+            this.ribbonPanel11.ButtonMoreVisible = false;
+            this.ribbonPanel11.Items.Add(this.btnRibbonCorner);
+            this.ribbonPanel11.Items.Add(this.btnRibbonApproxPoly);
+            this.ribbonPanel11.Items.Add(this.btnRibbonAffine);
+            this.ribbonPanel11.Name = "ribbonPanel11";
+            this.ribbonPanel11.Text = "";
             // 
             // btnRibbonCorner
             // 
@@ -555,6 +468,20 @@ namespace OpenCVTest
             this.btnRibbonAffine.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonAffine.SmallImage")));
             this.btnRibbonAffine.Text = "기하학적변환";
             this.btnRibbonAffine.Click += new System.EventHandler(this.btnRibbonAffine_Click);
+            // 
+            // ribbonPanel12
+            // 
+            this.ribbonPanel12.ButtonMoreVisible = false;
+            this.ribbonPanel12.Items.Add(this.Expansion);
+            this.ribbonPanel12.Items.Add(this.Erosion);
+            this.ribbonPanel12.Items.Add(this.OpenMorphology);
+            this.ribbonPanel12.Items.Add(this.CloseMorphology);
+            this.ribbonPanel12.Items.Add(this.GradientMorphology);
+            this.ribbonPanel12.Items.Add(this.TopHatMorphology);
+            this.ribbonPanel12.Items.Add(this.BlackHatMorphology);
+            this.ribbonPanel12.Items.Add(this.HitMissMorphology);
+            this.ribbonPanel12.Name = "ribbonPanel12";
+            this.ribbonPanel12.Text = "";
             // 
             // Expansion
             // 
@@ -636,6 +563,20 @@ namespace OpenCVTest
             this.HitMissMorphology.Text = "히트미스";
             this.HitMissMorphology.Click += new System.EventHandler(this.HitMissMorphology_Click);
             // 
+            // ribbonTab5
+            // 
+            this.ribbonTab5.Name = "ribbonTab5";
+            this.ribbonTab5.Panels.Add(this.ribbonPanel9);
+            this.ribbonTab5.Text = "명함";
+            // 
+            // ribbonPanel9
+            // 
+            this.ribbonPanel9.ButtonMoreVisible = false;
+            this.ribbonPanel9.Items.Add(this.btnRibbonEnglish);
+            this.ribbonPanel9.Items.Add(this.btnRibbonHangul);
+            this.ribbonPanel9.Name = "ribbonPanel9";
+            this.ribbonPanel9.Text = "판독";
+            // 
             // btnRibbonEnglish
             // 
             this.btnRibbonEnglish.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonEnglish.Image")));
@@ -656,6 +597,20 @@ namespace OpenCVTest
             this.btnRibbonHangul.Text = "한글 판독";
             this.btnRibbonHangul.Click += new System.EventHandler(this.btnRibbonHangul_Click);
             // 
+            // ribbonTab6
+            // 
+            this.ribbonTab6.Name = "ribbonTab6";
+            this.ribbonTab6.Panels.Add(this.ribbonPanel13);
+            this.ribbonTab6.Panels.Add(this.ribbonPanel14);
+            this.ribbonTab6.Text = "색상검출";
+            // 
+            // ribbonPanel13
+            // 
+            this.ribbonPanel13.ButtonMoreVisible = false;
+            this.ribbonPanel13.Items.Add(this.btnBlur);
+            this.ribbonPanel13.Name = "ribbonPanel13";
+            this.ribbonPanel13.Text = "";
+            // 
             // btnBlur
             // 
             this.btnBlur.Image = ((System.Drawing.Image)(resources.GetObject("btnBlur.Image")));
@@ -667,6 +622,7 @@ namespace OpenCVTest
             // 
             // ribbonPanel14
             // 
+            this.ribbonPanel14.ButtonMoreVisible = false;
             this.ribbonPanel14.Items.Add(this.btnCircleDetection);
             this.ribbonPanel14.Name = "ribbonPanel14";
             this.ribbonPanel14.Text = "";
@@ -679,6 +635,51 @@ namespace OpenCVTest
             this.btnCircleDetection.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.SmallImage")));
             this.btnCircleDetection.Text = "원검출";
             this.btnCircleDetection.Click += new System.EventHandler(this.btnCircleDetection_Click);
+            // 
+            // cvsInSightDisplay1
+            // 
+            this.cvsInSightDisplay1.DefaultTextScaleMode = Cognex.InSight.Controls.Display.CvsInSightDisplay.TextScaleModeType.Proportional;
+            this.cvsInSightDisplay1.DialogIcon = null;
+            this.cvsInSightDisplay1.Location = new System.Drawing.Point(0, 0);
+            this.cvsInSightDisplay1.Name = "cvsInSightDisplay1";
+            this.cvsInSightDisplay1.PreferredCropScaleMode = Cognex.InSight.Controls.Display.CvsInSightDisplayCropScaleMode.Default;
+            this.cvsInSightDisplay1.Size = new System.Drawing.Size(1280, 960);
+            this.cvsInSightDisplay1.TabIndex = 8;
+            this.cvsInSightDisplay1.Visible = false;
+            this.cvsInSightDisplay1.ResultsChanged += new System.EventHandler(this.cvsInSightDisplay1_ResultsChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.cvsInSightDisplay1);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(9, 222);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1280, 960);
+            this.panel1.TabIndex = 9;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1280, 960);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Location = new System.Drawing.Point(1295, 222);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(435, 979);
+            this.panel2.TabIndex = 10;
             // 
             // Form1
             // 
