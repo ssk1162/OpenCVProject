@@ -436,13 +436,10 @@ namespace OpenCVTest
 
             // 가장 많이 나타난 색상의 수를 찾기
             int maxIndex = Array.IndexOf(colorCounts, colorCounts.Max());
-
             // enum에서 인덱스를 사용 색상을 찾는다
             maxColor = Enum.GetName(typeof(colorNames), maxIndex);
-
             // PutText에 값에 색상 + 몇 % 출력
             biggestColor = $"{maxColor} : {colorCounts[maxIndex]}%";
-
             // enum에 정의된 모든 값을 Array형태로 반환, colorNames 타입으로 변환
             colorStr = string.Join("\n\r", Enum.GetValues(typeof(colorNames)).Cast<colorNames>()
                 // color는 colorNames 열거형 값, colorCounts[(int)color] 색상의 인덱스를 얻을 수 있다
@@ -486,7 +483,6 @@ namespace OpenCVTest
                     (int)(2 * radius),
                     (int)(2 * radius)
                 );
-
                 // 색상 분석
                 using (Mat area = new Mat(src, areaRect))
                 {
