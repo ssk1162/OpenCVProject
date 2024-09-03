@@ -436,11 +436,17 @@ namespace OpenCVTest
 
             // 가장 많이 나타난 색상의 수를 찾기
             int maxIndex = Array.IndexOf(colorCounts, colorCounts.Max());
+
             // enum에서 인덱스를 사용 색상을 찾는다
             maxColor = Enum.GetName(typeof(colorNames), maxIndex);
+
+            // PutText에 값에 색상 + 몇 % 출력
             biggestColor = $"{maxColor} : {colorCounts[maxIndex]}%";
 
+            // enum에 정의된 모든 값을 Array형태로 반환, colorNames 타입으로 변환
             colorStr = string.Join("\n\r", Enum.GetValues(typeof(colorNames)).Cast<colorNames>()
+                // color는 colorNames 열거형 값, colorCounts[(int)color] 색상의 인덱스를 얻을 수 있다
+                // 0 보다 크면 색상 : 비율% 얻을 수 있고, 아니면 색상 : 0%
                 .Select(color => colorCounts[(int)color] > 0 ? $"{color} : {colorCounts[(int)color]}%" : ""));
         }
 
@@ -449,19 +455,31 @@ namespace OpenCVTest
             Mat dst = src.Clone();
             circle = new Mat();
 
+            // 이미지 채널이 1이 아닌 경우 그레이스케일로 변환
             if (src.Channels() != 1)
                 Cv2.CvtColor(src, circle, ColorConversionCodes.BGR2GRAY);
             else
                 src.CopyTo(circle);
 
+            // 가우시안 블러 적용
+            // 표준 편차 3으로 적용
             Cv2.GaussianBlur(circle, circle, new Size(13, 13), 3, 3);
 
+            // 입력 이미지, 허프 변환(허프 변환을 사용하여 원을 검출),
+            // 축척 인자(값이 클수록 원의 반지름이 더 커지며 원의 검출 감도가 변화할 수 있음 일반적으로 1 설정),
+            // 원의 최소 거리, 원의 임계값, 검출할 원의 최소 반지름, 원의 최대 반지름(0이며 제한이 없음),
+            // 선택적인 파라미터로 특정한 형식을 사용할 수 있지만, 일반적으로 0으로 설정
             CircleSegment[] circles = Cv2.HoughCircles(circle, HoughModes.Gradient, 1, 100, 100, 35, 0, 0);
+
             foreach (var circleSegment in circles)
             {
+                // 원의 중심 좌표
                 Point center = (Point)circleSegment.Center;
+
+                // 원의 반지름
                 double radius = circleSegment.Radius;
 
+                // 중심 좌표, 반지름을 정의하는 사각형을 생성
                 Rect areaRect = new Rect(
                     (int)(center.X - radius),
                     (int)(center.Y - radius),
@@ -469,18 +487,20 @@ namespace OpenCVTest
                     (int)(2 * radius)
                 );
 
+                // 색상 분석
                 using (Mat area = new Mat(src, areaRect))
                 {
                     AnalyzeColor(area);
                 }
 
-                // 텍스트 위치 조정
                 string text = biggestColor;
+                // 텍스트의 크기와 두께를 계산, baseline 텍스트의 하단 여백을 포함한 크기
                 Size textSize = Cv2.GetTextSize(text, HersheyFonts.HersheySimplex, 0.7, 1, out int baseline);
 
                 // 텍스트를 원의 중심 위쪽으로 위치 조정
                 Point textOrigin = new Point(center.X - textSize.Width / 2, center.Y - (int)(radius + textSize.Height + baseline));
 
+                // 텍스트를 추가할 이미지, 출력할 text, 시작 위치, 폰트 스타일, 폰트 크기, 텍스트 색상, 텍스트 두께 
                 Cv2.PutText(dst, text, textOrigin, HersheyFonts.HersheySimplex, 0.7, GetColorScalar(maxColor), 1);
 
             }
