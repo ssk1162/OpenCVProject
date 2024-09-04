@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using Tesseract;
+using static OpenCvSharp.LineIterator;
 
 namespace OpenCVTest
 {
@@ -38,7 +39,7 @@ namespace OpenCVTest
         private string SensorAddress;
 
         // 카메라1,2,3 / 그레이스케일 / 트리거
-        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag, BlurFlag;
+        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag, BlurFlag, MoneyFlag;
 
         private RibbonCheckBox btnCheck;
 
@@ -165,6 +166,12 @@ namespace OpenCVTest
         // 폴더 열기
         private void ribbonOrbOpen_Click(object sender, EventArgs e)
         {
+            timer1.Enabled = false;
+            MoneyFlag = false;
+            Ca1Flag = false;
+            Ca2Flag = false;
+            Ca3Flag = false;
+
             ofd.Filter = "All Files (*.*)|*.*|Files (*.jpg *.jpeg *.png)|*.jpg;*.jpeg;*.png;|Video Files (*.mp4 *.avi *.mov *.mkv *.wmv)|*.mp4;*.avi;*.mov;*.mkv;*.wmv;";
 
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -193,9 +200,7 @@ namespace OpenCVTest
 
                 hScrollBar1.Value = 100;
                 ScaleValue.Text = $"{hScrollBar1.Value.ToString()}%";
-                Ca1Flag = false;
-                Ca2Flag = false;
-                Ca3Flag = false;
+
                 ribbonUpDown.TextBoxText = "100%";
                 ribbonUpDown.Value = "100";
                 if (list != null)
@@ -253,6 +258,7 @@ namespace OpenCVTest
                     timer1.Enabled = false;
                 }
 
+                MoneyFlag = false;
                 Ca1Flag = true;
                 Ca2Flag = false;
                 Ca3Flag = false;
@@ -279,6 +285,8 @@ namespace OpenCVTest
                 Ca1Flag = false;
                 timer1.Enabled = false;
                 pictureBox1.Image = null;
+                btnRibbonTrigger.Enabled = false;
+                video.Release();
             }
         }
 
@@ -300,6 +308,7 @@ namespace OpenCVTest
                     timer1.Enabled = false;
                 }
 
+                MoneyFlag = false;
                 Ca1Flag = false;
                 Ca2Flag = true;
                 Ca3Flag = false;
@@ -326,6 +335,8 @@ namespace OpenCVTest
                 Ca2Flag = false;
                 timer1.Enabled = false;
                 pictureBox1.Image = null;
+                btnRibbonTrigger.Enabled = false;
+                video.Release();
             }
         }
 
@@ -346,6 +357,7 @@ namespace OpenCVTest
                     cvsInSightDisplay1.Visible = true;
                     cvsInSightDisplay1.ImageZoomMode = CvsDisplayZoom.Fit;
 
+                    MoneyFlag = false;
                     Ca1Flag = false;
                     Ca2Flag = false;
                     Ca3Flag = true;
@@ -372,7 +384,7 @@ namespace OpenCVTest
                 {
                     cvsInSightDisplay1.InSight.LiveAcquisition = false;
                     Ca3Flag = false;
-
+                    btnRibbonTrigger.Enabled = false;
                     _HostSensor = null;
                     cvsInSightDisplay1.Disconnect();
                     cvsInSightDisplay1.Dispose();
@@ -398,7 +410,7 @@ namespace OpenCVTest
                     hScrollBar1.Value = 100;
                     ScaleValue.Text = $"{hScrollBar1.Value.ToString()}%";
 
-                    video.Dispose();
+                    video.Release();
                     frame.Dispose();
 
                 }
@@ -442,6 +454,23 @@ namespace OpenCVTest
 
         }
 
+        private void btnMoney_Click(object sender, EventArgs e)
+        {
+            if (MoneyFlag == false && pictureBox1.Image != null)
+            {
+                MoneyFlag = true;
+                timer1.Enabled = true;
+            }
+            else
+            {
+                MoneyFlag = false;
+                timer1.Enabled = false;
+            }
+
+        }
+
+        Mat img;
+        Mat imgresult;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (video != null)
@@ -449,11 +478,64 @@ namespace OpenCVTest
                 try
                 {
                     video.Read(frame);
-                    result = frame;
-                    pictureBox1.Image = result.ToBitmap();
+
+                    if (frame.Empty())
+                    {
+                        return;
+                    }
+
+                    if (MoneyFlag == true)
+                    {
+                        img = new Mat();
+                        imgresult = new Mat();
+
+                        img = openCV.GrayScale(frame);
+                        Cv2.BilateralFilter(img, result, 9, 3, 3, BorderTypes.Default);
+                        Cv2.AdaptiveThreshold(result, imgresult, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.BinaryInv, 11, 10);
+                        imgresult = CircleImg(imgresult);
+
+                        pictureBox1.Image = imgresult.ToBitmap();
+
+                    }
+                    else
+                    {
+                        result = frame;
+                        pictureBox1.Image = result.ToBitmap();
+                    }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"OpenCVException 발생: {ex.Message}");
+                    video.Release();
+                }
             }
+        }
+
+        private Mat CircleImg(Mat src)
+        {
+            string coin = "";
+
+            CircleSegment[] circles = Cv2.HoughCircles(src, HoughModes.Gradient, 1, 40, 100, 20, 40, 60);
+
+            foreach (var imgcircle in circles)
+            {
+                var center = new OpenCvSharp.Point(imgcircle.Center.X, imgcircle.Center.Y);
+                var radius = (int)imgcircle.Radius;
+
+                if (radius > 40 && radius < 53)
+                {
+                    coin = "100 won";
+                }
+                else if (radius >= 53 && radius < 60)
+                {
+                    coin = "500 won";
+                }
+                Cv2.Circle(src, (OpenCvSharp.Point)imgcircle.Center, (int)imgcircle.Radius, Scalar.White, 2);
+
+                Cv2.PutText(src, coin, new OpenCvSharp.Point(center.X - 20, center.Y - radius - 10), HersheyFonts.HersheySimplex, 1.0, Scalar.White, 1);
+            }
+
+            return src;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -476,9 +558,13 @@ namespace OpenCVTest
         {
             result = BitmapConverter.ToMat((Bitmap)pictureBox1.Image);
             if (pictureBox1.Image != null)
+            {
                 pictureBox1.Image = openCV.GrayScale(result).ToBitmap();
+            }
             else
+            {
                 return;
+            }
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -573,7 +659,6 @@ namespace OpenCVTest
         private void Init()
         {
             _Monitor = new CvsNetworkMonitor();
-            //_Monitor.PingInterval = 0;
 
             _Monitor.HostsChanged += _Monitor_HostsChanged;
             _Monitor.Enabled = true;
@@ -761,52 +846,6 @@ namespace OpenCVTest
                 catch { }
             }
         }
-
-        //private void ExpansionErosion_Click(object sender, EventArgs e)
-        //{
-        //    // 기본 임계값
-        //    int cannyValue = 50;
-        //    if (pictureBox1.Image != null)
-        //    {
-        //        Cv2.NamedWindow("EDI");
-        //        Cv2.CreateTrackbar("임계치", "EDI", ref cannyValue, 255);
-        //        try
-        //        {
-        //            while (true)
-        //            {
-        //                pictureBox1.Image = openCV.EDImage(result).ToBitmap();
-        //                Cv2.ImShow("EDI", openCV.EDImage(result));
-        //                if (Cv2.WaitKey(33) == 'q')
-        //                    break;
-        //            }
-        //            Cv2.DestroyAllWindows();
-        //        }
-        //        catch { }
-        //    }
-        //}
-
-        //private void ErosionExpansion_Click(object sender, EventArgs e)
-        //{
-        //    // 기본 임계값
-        //    int cannyValue = 50;
-        //    if (pictureBox1.Image != null)
-        //    {
-        //        Cv2.NamedWindow("DEI");
-        //        Cv2.CreateTrackbar("임계치", "DEI", ref cannyValue, 255);
-        //        try
-        //        {
-        //            while (true)
-        //            {
-        //                pictureBox1.Image = openCV.DEImage(result).ToBitmap();
-        //                Cv2.ImShow("DEI", openCV.DEImage(result));
-        //                if (Cv2.WaitKey(33) == 'q')
-        //                    break;
-        //            }
-        //            Cv2.DestroyAllWindows();
-        //        }
-        //        catch { }
-        //    }
-        //}
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {

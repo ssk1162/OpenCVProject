@@ -1,10 +1,6 @@
 ﻿using OpenCvSharp;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Windows.Documents;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OpenCVTest
 {
@@ -317,6 +313,7 @@ namespace OpenCVTest
 
         private readonly Random random = new Random();
         private readonly int[] colorCounts = new int[9];
+
         private enum colorNames
         {
             Red,
@@ -330,7 +327,6 @@ namespace OpenCVTest
             White
         }
 
-            
         public Scalar GetColorScalar(string colorName)
         {
             // Vec3b = 3개의 byte를 가진 벡터이고, 이미지 색상 정보를 표현하는데 사용
@@ -491,7 +487,7 @@ namespace OpenCVTest
 
                 string text = biggestColor;
                 // 텍스트의 크기와 두께를 계산, baseline 텍스트의 하단 여백을 포함한 크기
-                Size textSize = Cv2.GetTextSize(text, HersheyFonts.HersheySimplex, 0.7, 1, out int baseline);
+                Size textSize = Cv2.GetTextSize(text, HersheyFonts.HersheySimplex, 0.4, 1, out int baseline);
 
                 // 텍스트를 원의 중심 위쪽으로 위치 조정
                 Point textOrigin = new Point(center.X - textSize.Width / 2, center.Y - (int)(radius + textSize.Height + baseline));

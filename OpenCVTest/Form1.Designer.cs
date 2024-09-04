@@ -90,6 +90,9 @@ namespace OpenCVTest
             this.btnBlur = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel14 = new System.Windows.Forms.RibbonPanel();
             this.btnCircleDetection = new System.Windows.Forms.RibbonButton();
+            this.ribbonTab7 = new System.Windows.Forms.RibbonTab();
+            this.ribbonPanel10 = new System.Windows.Forms.RibbonPanel();
+            this.btnMoney = new System.Windows.Forms.RibbonButton();
             this.cvsInSightDisplay1 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -175,6 +178,7 @@ namespace OpenCVTest
             this.ribbon1.Tabs.Add(this.ribbonTab4);
             this.ribbon1.Tabs.Add(this.ribbonTab5);
             this.ribbon1.Tabs.Add(this.ribbonTab6);
+            this.ribbon1.Tabs.Add(this.ribbonTab7);
             this.ribbon1.TabSpacing = 3;
             // 
             // ribbonOrbOpen
@@ -629,12 +633,34 @@ namespace OpenCVTest
             // 
             // btnCircleDetection
             // 
-            this.btnCircleDetection.Image = global::OpenCVTest.Properties.Resources._2071669;
-            this.btnCircleDetection.LargeImage = new Bitmap(global::OpenCVTest.Properties.Resources._2071669, new Size(35,35));
+            this.btnCircleDetection.Image = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.Image")));
+            this.btnCircleDetection.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.LargeImage")));
             this.btnCircleDetection.Name = "btnCircleDetection";
             this.btnCircleDetection.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnCircleDetection.SmallImage")));
             this.btnCircleDetection.Text = "원검출";
             this.btnCircleDetection.Click += new System.EventHandler(this.btnCircleDetection_Click);
+            // 
+            // ribbonTab7
+            // 
+            this.ribbonTab7.Name = "ribbonTab7";
+            this.ribbonTab7.Panels.Add(this.ribbonPanel10);
+            this.ribbonTab7.Text = "동전검출";
+            // 
+            // ribbonPanel10
+            // 
+            this.ribbonPanel10.ButtonMoreVisible = false;
+            this.ribbonPanel10.Items.Add(this.btnMoney);
+            this.ribbonPanel10.Name = "ribbonPanel10";
+            this.ribbonPanel10.Text = "";
+            // 
+            // btnMoney
+            // 
+            this.btnMoney.Image = ((System.Drawing.Image)(resources.GetObject("btnMoney.Image")));
+            this.btnMoney.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnMoney.LargeImage")));
+            this.btnMoney.Name = "btnMoney";
+            this.btnMoney.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnMoney.SmallImage")));
+            this.btnMoney.Text = "카메라 동전검출";
+            this.btnMoney.Click += new System.EventHandler(this.btnMoney_Click);
             // 
             // cvsInSightDisplay1
             // 
@@ -763,6 +789,9 @@ namespace OpenCVTest
         private System.Windows.Forms.RibbonButton btnBlur;
         private System.Windows.Forms.RibbonPanel ribbonPanel14;
         private System.Windows.Forms.RibbonButton btnCircleDetection;
+        private System.Windows.Forms.RibbonTab ribbonTab7;
+        private System.Windows.Forms.RibbonPanel ribbonPanel10;
+        private System.Windows.Forms.RibbonButton btnMoney;
     }
 }
 
