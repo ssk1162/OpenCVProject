@@ -10,7 +10,8 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using Tesseract;
-using static OpenCvSharp.LineIterator;
+using ZXing;
+using System.Windows.Media;
 
 namespace OpenCVTest
 {
@@ -48,7 +49,7 @@ namespace OpenCVTest
         private bool SymmetryFlag;
 
         int cropX, cropY, cropWidth, cropHeight;
-        private Pen cropPen;
+        private System.Drawing.Pen cropPen;
 
         private bool Makeselection = false;
 
@@ -67,6 +68,14 @@ namespace OpenCVTest
         UserControlForm ucf;
         BlurControl bc;
 
+        DBConnect db = new DBConnect();
+
+        string company;
+        string product;
+        string production;
+        DateTime date;
+        string test;
+
         public Form1()
         {
             InitializeComponent();
@@ -84,6 +93,9 @@ namespace OpenCVTest
             this.hScrollBar1.Maximum += this.hScrollBar1.LargeChange - 1;
 
             pictureBox1.DoubleClick += PictureBox1_DoubleClick;
+
+            db.connect();
+            MessageBox.Show(db.msg);
         }
 
         private int Bc_eventClose()
@@ -263,6 +275,7 @@ namespace OpenCVTest
                 Ca2Flag = false;
                 Ca3Flag = false;
 
+                groupBox2.Visible = false;
                 btnRibbonTrigger.Enabled = true;
                 cvsInSightDisplay1.Visible = false;
                 _HostSensor = null;
@@ -313,6 +326,7 @@ namespace OpenCVTest
                 Ca2Flag = true;
                 Ca3Flag = false;
 
+                groupBox2.Visible = false;
                 btnRibbonTrigger.Enabled = true;
                 cvsInSightDisplay1.Visible = false;
                 _HostSensor = null;
@@ -370,9 +384,9 @@ namespace OpenCVTest
                     ribbonUpDown.TextBoxText = "100%";
                     ribbonUpDown.Value = "100";
 
+                    groupBox2.Visible = false;
                     btnRibbonTrigger.Enabled = true;
                     cbRibbonLive.Enabled = true;
-
                     timer1.Enabled = false;
                     timer2.Enabled = false;
                     if (list != null)
@@ -469,8 +483,6 @@ namespace OpenCVTest
 
         }
 
-        Mat img;
-        Mat imgresult;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (video != null)
@@ -486,16 +498,8 @@ namespace OpenCVTest
 
                     if (MoneyFlag == true)
                     {
-                        img = new Mat();
-                        imgresult = new Mat();
-
-                        img = openCV.GrayScale(frame);
-                        Cv2.BilateralFilter(img, result, 9, 3, 3, BorderTypes.Default);
-                        Cv2.AdaptiveThreshold(result, imgresult, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.BinaryInv, 11, 10);
-                        imgresult = CircleImg(imgresult);
-
-                        pictureBox1.Image = imgresult.ToBitmap();
-
+                        result = CircleImg(frame);
+                        pictureBox1.Image = result.ToBitmap();
                     }
                     else
                     {
@@ -514,13 +518,25 @@ namespace OpenCVTest
         private Mat CircleImg(Mat src)
         {
             string coin = "";
+            Mat dst = new Mat();
+            Mat img = new Mat();
+            Mat imgresult = new Mat();
 
-            CircleSegment[] circles = Cv2.HoughCircles(src, HoughModes.Gradient, 1, 40, 100, 20, 40, 60);
+            Cv2.CopyTo(src, dst);
+
+            if (src.Channels() != 1)
+                img = openCV.GrayScale(src);
+
+            Cv2.BilateralFilter(img, imgresult, 9, 3, 3, BorderTypes.Default);
+            Cv2.EqualizeHist(imgresult, imgresult);
+            Cv2.AdaptiveThreshold(imgresult, img, 255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.BinaryInv, 11, 10);
+
+            CircleSegment[] circles = Cv2.HoughCircles(img, HoughModes.Gradient, 1, 40, 100, 20, 40, 60);
 
             foreach (var imgcircle in circles)
             {
-                var center = new OpenCvSharp.Point(imgcircle.Center.X, imgcircle.Center.Y);
-                var radius = (int)imgcircle.Radius;
+                OpenCvSharp.Point center = (OpenCvSharp.Point)imgcircle.Center;
+                double radius = imgcircle.Radius;
 
                 if (radius > 40 && radius < 53)
                 {
@@ -530,12 +546,12 @@ namespace OpenCVTest
                 {
                     coin = "500 won";
                 }
-                Cv2.Circle(src, (OpenCvSharp.Point)imgcircle.Center, (int)imgcircle.Radius, Scalar.White, 2);
+                Cv2.Circle(dst, (OpenCvSharp.Point)imgcircle.Center, (int)imgcircle.Radius, Scalar.Red, 2);
 
-                Cv2.PutText(src, coin, new OpenCvSharp.Point(center.X - 20, center.Y - radius - 10), HersheyFonts.HersheySimplex, 1.0, Scalar.White, 1);
+                Cv2.PutText(dst, coin, new OpenCvSharp.Point(center.X - 20, center.Y - radius - 10), HersheyFonts.HersheySimplex, 1.0, Scalar.White, 1);
             }
 
-            return src;
+            return dst;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -583,8 +599,8 @@ namespace OpenCVTest
                             cropX = e.X;
                             cropY = e.Y;
 
-                            cropPen = new Pen(Color.Red, 1);
-                            cropPen.DashStyle = DashStyle.Dot;
+                            cropPen = new System.Drawing.Pen(System.Drawing.Color.Red, 1);
+                            cropPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                         }
                         pictureBox1.Refresh();
                     }
@@ -1069,6 +1085,153 @@ namespace OpenCVTest
                 }
                 catch { }
             }
+        }
+
+        int year;
+        int month;
+        private void btnBarCord_Click(object sender, EventArgs e)
+        {
+            string decoded = "";
+            BarcodeReader reader = new BarcodeReader();
+            Result result = reader.Decode((Bitmap)pictureBox1.Image);
+
+            if (result != null)
+            {
+                int[] num = { 2, 4, 2, 4, 1 };
+                int currentPosition = 0;
+
+                decoded = result.ToString() + "\r\n" + result.BarcodeFormat.ToString();
+
+                for (int i = 0; i < num.Length; i++)
+                {
+                    if (currentPosition + num[i] <= result.Text.Length)
+                    {
+                        string segment = result.Text.Substring(currentPosition, num[i]);
+                        currentPosition += num[i];
+
+                        if (i == 0)
+                        {
+                            switch (segment)
+                            {
+                                case "11":
+                                    company = "삼성";
+                                    break;
+                                case "21":
+                                    company = "엘지";
+                                    break;
+                                case "88":
+                                    company = "씨제이";
+                                    break;
+                                case "99":
+                                    company = "오뚜기";
+                                    break;
+                            }
+                        }
+                        else if (i == 1)
+                        {
+                            switch (segment)
+                            {
+                                case "1234":
+                                    product = "세탁기";
+                                    break;
+                                case "1245":
+                                    product = "냉장고";
+                                    break;
+                                case "1256":
+                                    product = "정수기";
+                                    break;
+                                case "1267":
+                                    product = "에어컨";
+                                    break;
+                                case "3412":
+                                    product = "햇반";
+                                    break;
+                                case "3413":
+                                    product = "밀가루";
+                                    break;
+                                case "3415":
+                                    product = "만두";
+                                    break;
+                                case "3416":
+                                    product = "라면";
+                                    break;
+                            }
+                        }
+                        else if (i == 2)
+                        {
+                            switch (segment)
+                            {
+                                case "11":
+                                    production = "한국";
+                                    break;
+                                case "12":
+                                    production = "차이나";
+                                    break;
+                                case "13":
+                                    production = "베트남";
+                                    break;
+                                case "14":
+                                    production = "태국";
+                                    break;
+                            }
+                        }
+                        else if (i == 3)
+                        {
+                            string yearSub = segment.Substring(0, 2);
+                            string monthSub = segment.Substring(2, 2);
+
+                            year = 2000 + int.Parse(yearSub);
+                            month = int.Parse(monthSub);
+
+                            date = new DateTime(year, month, 1);
+                        }
+                        else
+                        {
+                            int oddSum = 0;
+                            int evenSum = 0;
+                            char[] arr = result.Text.ToCharArray();
+                            for (int j = 0; j < result.Text.Length - 1; j++)
+                            {
+                                int ch = int.Parse(arr[j].ToString());
+
+                                if ((j + 1) % 2 == 1)
+                                {
+                                    oddSum += ch;
+                                }
+                                else
+                                {
+                                    evenSum += ch;
+                                }
+                            }
+
+                            int checkDigit = 10 - ((oddSum + evenSum * 3) % 10);
+
+                            if (checkDigit == 10) checkDigit = 0;
+
+                            if (segment.Equals(checkDigit.ToString()))
+                            {
+                                test = segment;
+                            }
+                        }
+
+                    }
+                }
+
+                db.insert(company, product, production, date, test);
+
+                dataGridView1.DataSource = db.dt;
+                groupBox2.Visible = true;
+
+                //textBox1.Text = $"{company}\r\n {product}\r\n {production}\r\n {date}\r\n {test}";
+
+                MessageBox.Show($"{db.msg} : {year}");
+            }
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            db.select(textBox1.Text);
+            dataGridView1.DataSource = db.dt;
         }
 
         private void btnCircleDetection_Click(object sender, EventArgs e)

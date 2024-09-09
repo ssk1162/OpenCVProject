@@ -93,13 +93,23 @@ namespace OpenCVTest
             this.ribbonTab7 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel10 = new System.Windows.Forms.RibbonPanel();
             this.btnMoney = new System.Windows.Forms.RibbonButton();
+            this.ribbonTab8 = new System.Windows.Forms.RibbonTab();
+            this.ribbonPanel15 = new System.Windows.Forms.RibbonPanel();
+            this.btnBarCord = new System.Windows.Forms.RibbonButton();
             this.cvsInSightDisplay1 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -179,6 +189,7 @@ namespace OpenCVTest
             this.ribbon1.Tabs.Add(this.ribbonTab5);
             this.ribbon1.Tabs.Add(this.ribbonTab6);
             this.ribbon1.Tabs.Add(this.ribbonTab7);
+            this.ribbon1.Tabs.Add(this.ribbonTab8);
             this.ribbon1.TabSpacing = 3;
             // 
             // ribbonOrbOpen
@@ -662,6 +673,28 @@ namespace OpenCVTest
             this.btnMoney.Text = "카메라 동전검출";
             this.btnMoney.Click += new System.EventHandler(this.btnMoney_Click);
             // 
+            // ribbonTab8
+            // 
+            this.ribbonTab8.Name = "ribbonTab8";
+            this.ribbonTab8.Panels.Add(this.ribbonPanel15);
+            this.ribbonTab8.Text = "바코드검출";
+            // 
+            // ribbonPanel15
+            // 
+            this.ribbonPanel15.ButtonMoreVisible = false;
+            this.ribbonPanel15.Items.Add(this.btnBarCord);
+            this.ribbonPanel15.Name = "ribbonPanel15";
+            this.ribbonPanel15.Text = "";
+            // 
+            // btnBarCord
+            // 
+            this.btnBarCord.Image = ((System.Drawing.Image)(resources.GetObject("btnBarCord.Image")));
+            this.btnBarCord.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnBarCord.LargeImage")));
+            this.btnBarCord.Name = "btnBarCord";
+            this.btnBarCord.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnBarCord.SmallImage")));
+            this.btnBarCord.Text = "바코드";
+            this.btnBarCord.Click += new System.EventHandler(this.btnBarCord_Click);
+            // 
             // cvsInSightDisplay1
             // 
             this.cvsInSightDisplay1.DefaultTextScaleMode = Cognex.InSight.Controls.Display.CvsInSightDisplay.TextScaleModeType.Proportional;
@@ -702,10 +735,51 @@ namespace OpenCVTest
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Location = new System.Drawing.Point(1295, 222);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(435, 979);
             this.panel2.TabIndex = 10;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.btnSelect);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(432, 976);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 70);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 30;
+            this.dataGridView1.Size = new System.Drawing.Size(432, 906);
+            this.dataGridView1.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 28);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(307, 36);
+            this.textBox1.TabIndex = 1;
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.Location = new System.Drawing.Point(319, 27);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(99, 37);
+            this.btnSelect.TabIndex = 0;
+            this.btnSelect.Text = "검색";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // Form1
             // 
@@ -723,6 +797,10 @@ namespace OpenCVTest
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -792,6 +870,13 @@ namespace OpenCVTest
         private System.Windows.Forms.RibbonTab ribbonTab7;
         private System.Windows.Forms.RibbonPanel ribbonPanel10;
         private System.Windows.Forms.RibbonButton btnMoney;
+        private System.Windows.Forms.RibbonTab ribbonTab8;
+        private System.Windows.Forms.RibbonPanel ribbonPanel15;
+        private System.Windows.Forms.RibbonButton btnBarCord;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnSelect;
     }
 }
 
