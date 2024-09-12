@@ -293,6 +293,16 @@ namespace OpenCVTest.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap dwqdwqfe {
+            get {
+                object obj = ResourceManager.GetObject("dwqdwqfe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap dwqfew {
             get {
                 object obj = ResourceManager.GetObject("dwqfew", resourceCulture);
@@ -316,6 +326,26 @@ namespace OpenCVTest.Properties {
         internal static System.Drawing.Bitmap ewqewq {
             get {
                 object obj = ResourceManager.GetObject("ewqewq", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap greew {
+            get {
+                object obj = ResourceManager.GetObject("greew", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap hgre {
+            get {
+                object obj = ResourceManager.GetObject("hgre", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

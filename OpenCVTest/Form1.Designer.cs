@@ -67,6 +67,8 @@ namespace OpenCVTest
             this.btnRibbonGray = new System.Windows.Forms.RibbonButton();
             this.btnRibbonBinaryization = new System.Windows.Forms.RibbonButton();
             this.btnRibbonCannyEdge = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel16 = new System.Windows.Forms.RibbonPanel();
+            this.btnBlur = new System.Windows.Forms.RibbonButton();
             this.ribbonTab4 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
             this.btnRibbonCorner = new System.Windows.Forms.RibbonButton();
@@ -86,16 +88,16 @@ namespace OpenCVTest
             this.btnRibbonEnglish = new System.Windows.Forms.RibbonButton();
             this.btnRibbonHangul = new System.Windows.Forms.RibbonButton();
             this.ribbonTab6 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
-            this.btnBlur = new System.Windows.Forms.RibbonButton();
             this.ribbonPanel14 = new System.Windows.Forms.RibbonPanel();
             this.btnCircleDetection = new System.Windows.Forms.RibbonButton();
-            this.ribbonTab7 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel10 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
             this.btnMoney = new System.Windows.Forms.RibbonButton();
-            this.ribbonTab8 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel15 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanel17 = new System.Windows.Forms.RibbonPanel();
             this.btnBarCord = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel18 = new System.Windows.Forms.RibbonPanel();
+            this.btnFace = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel10 = new System.Windows.Forms.RibbonPanel();
+            this.ribbonPanel15 = new System.Windows.Forms.RibbonPanel();
             this.cvsInSightDisplay1 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -188,8 +190,6 @@ namespace OpenCVTest
             this.ribbon1.Tabs.Add(this.ribbonTab4);
             this.ribbon1.Tabs.Add(this.ribbonTab5);
             this.ribbon1.Tabs.Add(this.ribbonTab6);
-            this.ribbon1.Tabs.Add(this.ribbonTab7);
-            this.ribbon1.Tabs.Add(this.ribbonTab8);
             this.ribbon1.TabSpacing = 3;
             // 
             // ribbonOrbOpen
@@ -400,6 +400,7 @@ namespace OpenCVTest
             // 
             this.ribbonTab3.Name = "ribbonTab3";
             this.ribbonTab3.Panels.Add(this.ribbonPanel3);
+            this.ribbonTab3.Panels.Add(this.ribbonPanel16);
             this.ribbonTab3.Text = "필터";
             // 
             // ribbonPanel3
@@ -438,6 +439,22 @@ namespace OpenCVTest
             this.btnRibbonCannyEdge.Text = "케니에지";
             this.btnRibbonCannyEdge.Click += new System.EventHandler(this.btnRibbonCannyEdge_Click);
             // 
+            // ribbonPanel16
+            // 
+            this.ribbonPanel16.ButtonMoreVisible = false;
+            this.ribbonPanel16.Items.Add(this.btnBlur);
+            this.ribbonPanel16.Name = "ribbonPanel16";
+            this.ribbonPanel16.Text = "블러";
+            // 
+            // btnBlur
+            // 
+            this.btnBlur.Image = ((System.Drawing.Image)(resources.GetObject("btnBlur.Image")));
+            this.btnBlur.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnBlur.LargeImage")));
+            this.btnBlur.Name = "btnBlur";
+            this.btnBlur.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnBlur.SmallImage")));
+            this.btnBlur.Text = "블러";
+            this.btnBlur.Click += new System.EventHandler(this.btnBlur_Click);
+            // 
             // ribbonTab4
             // 
             this.ribbonTab4.Name = "ribbonTab4";
@@ -458,27 +475,24 @@ namespace OpenCVTest
             // 
             this.btnRibbonCorner.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonCorner.Image")));
             this.btnRibbonCorner.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonCorner.LargeImage")));
-            this.btnRibbonCorner.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
             this.btnRibbonCorner.Name = "btnRibbonCorner";
             this.btnRibbonCorner.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonCorner.SmallImage")));
-            this.btnRibbonCorner.Text = "코너 검출";
+            this.btnRibbonCorner.Text = "코너검출";
             this.btnRibbonCorner.Click += new System.EventHandler(this.btnRibbonCorner_Click);
             // 
             // btnRibbonApproxPoly
             // 
             this.btnRibbonApproxPoly.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonApproxPoly.Image")));
             this.btnRibbonApproxPoly.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonApproxPoly.LargeImage")));
-            this.btnRibbonApproxPoly.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
             this.btnRibbonApproxPoly.Name = "btnRibbonApproxPoly";
             this.btnRibbonApproxPoly.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonApproxPoly.SmallImage")));
-            this.btnRibbonApproxPoly.Text = "코너 검출2";
+            this.btnRibbonApproxPoly.Text = "코너검출2";
             this.btnRibbonApproxPoly.Click += new System.EventHandler(this.btnRibbonApproxPoly_Click);
             // 
             // btnRibbonAffine
             // 
             this.btnRibbonAffine.Image = ((System.Drawing.Image)(resources.GetObject("btnRibbonAffine.Image")));
             this.btnRibbonAffine.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonAffine.LargeImage")));
-            this.btnRibbonAffine.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Medium;
             this.btnRibbonAffine.Name = "btnRibbonAffine";
             this.btnRibbonAffine.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbonAffine.SmallImage")));
             this.btnRibbonAffine.Text = "기하학적변환";
@@ -615,32 +629,18 @@ namespace OpenCVTest
             // ribbonTab6
             // 
             this.ribbonTab6.Name = "ribbonTab6";
-            this.ribbonTab6.Panels.Add(this.ribbonPanel13);
             this.ribbonTab6.Panels.Add(this.ribbonPanel14);
-            this.ribbonTab6.Text = "색상검출";
-            // 
-            // ribbonPanel13
-            // 
-            this.ribbonPanel13.ButtonMoreVisible = false;
-            this.ribbonPanel13.Items.Add(this.btnBlur);
-            this.ribbonPanel13.Name = "ribbonPanel13";
-            this.ribbonPanel13.Text = "";
-            // 
-            // btnBlur
-            // 
-            this.btnBlur.Image = ((System.Drawing.Image)(resources.GetObject("btnBlur.Image")));
-            this.btnBlur.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnBlur.LargeImage")));
-            this.btnBlur.Name = "btnBlur";
-            this.btnBlur.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnBlur.SmallImage")));
-            this.btnBlur.Text = "블러";
-            this.btnBlur.Click += new System.EventHandler(this.btnBlur_Click);
+            this.ribbonTab6.Panels.Add(this.ribbonPanel13);
+            this.ribbonTab6.Panels.Add(this.ribbonPanel17);
+            this.ribbonTab6.Panels.Add(this.ribbonPanel18);
+            this.ribbonTab6.Text = "검출";
             // 
             // ribbonPanel14
             // 
             this.ribbonPanel14.ButtonMoreVisible = false;
             this.ribbonPanel14.Items.Add(this.btnCircleDetection);
             this.ribbonPanel14.Name = "ribbonPanel14";
-            this.ribbonPanel14.Text = "";
+            this.ribbonPanel14.Text = "색상 검출";
             // 
             // btnCircleDetection
             // 
@@ -651,18 +651,12 @@ namespace OpenCVTest
             this.btnCircleDetection.Text = "원검출";
             this.btnCircleDetection.Click += new System.EventHandler(this.btnCircleDetection_Click);
             // 
-            // ribbonTab7
+            // ribbonPanel13
             // 
-            this.ribbonTab7.Name = "ribbonTab7";
-            this.ribbonTab7.Panels.Add(this.ribbonPanel10);
-            this.ribbonTab7.Text = "동전검출";
-            // 
-            // ribbonPanel10
-            // 
-            this.ribbonPanel10.ButtonMoreVisible = false;
-            this.ribbonPanel10.Items.Add(this.btnMoney);
-            this.ribbonPanel10.Name = "ribbonPanel10";
-            this.ribbonPanel10.Text = "";
+            this.ribbonPanel13.ButtonMoreVisible = false;
+            this.ribbonPanel13.Items.Add(this.btnMoney);
+            this.ribbonPanel13.Name = "ribbonPanel13";
+            this.ribbonPanel13.Text = "동전 검출";
             // 
             // btnMoney
             // 
@@ -670,21 +664,15 @@ namespace OpenCVTest
             this.btnMoney.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnMoney.LargeImage")));
             this.btnMoney.Name = "btnMoney";
             this.btnMoney.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnMoney.SmallImage")));
-            this.btnMoney.Text = "카메라 동전검출";
+            this.btnMoney.Text = "동전";
             this.btnMoney.Click += new System.EventHandler(this.btnMoney_Click);
             // 
-            // ribbonTab8
+            // ribbonPanel17
             // 
-            this.ribbonTab8.Name = "ribbonTab8";
-            this.ribbonTab8.Panels.Add(this.ribbonPanel15);
-            this.ribbonTab8.Text = "바코드검출";
-            // 
-            // ribbonPanel15
-            // 
-            this.ribbonPanel15.ButtonMoreVisible = false;
-            this.ribbonPanel15.Items.Add(this.btnBarCord);
-            this.ribbonPanel15.Name = "ribbonPanel15";
-            this.ribbonPanel15.Text = "";
+            this.ribbonPanel17.ButtonMoreVisible = false;
+            this.ribbonPanel17.Items.Add(this.btnBarCord);
+            this.ribbonPanel17.Name = "ribbonPanel17";
+            this.ribbonPanel17.Text = "바코드 검출";
             // 
             // btnBarCord
             // 
@@ -694,6 +682,31 @@ namespace OpenCVTest
             this.btnBarCord.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnBarCord.SmallImage")));
             this.btnBarCord.Text = "바코드";
             this.btnBarCord.Click += new System.EventHandler(this.btnBarCord_Click);
+            // 
+            // ribbonPanel18
+            // 
+            this.ribbonPanel18.Items.Add(this.btnFace);
+            this.ribbonPanel18.Name = "ribbonPanel18";
+            this.ribbonPanel18.Text = "얼굴 인식 / 이미지";
+            // 
+            // btnFace
+            // 
+            this.btnFace.Image = ((System.Drawing.Image)(resources.GetObject("btnFace.Image")));
+            this.btnFace.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnFace.LargeImage")));
+            this.btnFace.Name = "btnFace";
+            this.btnFace.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnFace.SmallImage")));
+            this.btnFace.Text = "스티커";
+            this.btnFace.Click += new System.EventHandler(this.btnFace_Click);
+            // 
+            // ribbonPanel10
+            // 
+            this.ribbonPanel10.Name = "ribbonPanel10";
+            this.ribbonPanel10.Text = null;
+            // 
+            // ribbonPanel15
+            // 
+            this.ribbonPanel15.Name = "ribbonPanel15";
+            this.ribbonPanel15.Text = null;
             // 
             // cvsInSightDisplay1
             // 
@@ -863,20 +876,22 @@ namespace OpenCVTest
         private System.Windows.Forms.RibbonButton BlackHatMorphology;
         private System.Windows.Forms.RibbonButton HitMissMorphology;
         private System.Windows.Forms.RibbonTab ribbonTab6;
-        private System.Windows.Forms.RibbonPanel ribbonPanel13;
         private System.Windows.Forms.RibbonButton btnBlur;
         private System.Windows.Forms.RibbonPanel ribbonPanel14;
         private System.Windows.Forms.RibbonButton btnCircleDetection;
-        private System.Windows.Forms.RibbonTab ribbonTab7;
         private System.Windows.Forms.RibbonPanel ribbonPanel10;
         private System.Windows.Forms.RibbonButton btnMoney;
-        private System.Windows.Forms.RibbonTab ribbonTab8;
         private System.Windows.Forms.RibbonPanel ribbonPanel15;
         private System.Windows.Forms.RibbonButton btnBarCord;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.RibbonPanel ribbonPanel16;
+        private System.Windows.Forms.RibbonPanel ribbonPanel13;
+        private System.Windows.Forms.RibbonPanel ribbonPanel17;
+        private System.Windows.Forms.RibbonPanel ribbonPanel18;
+        private System.Windows.Forms.RibbonButton btnFace;
     }
 }
 

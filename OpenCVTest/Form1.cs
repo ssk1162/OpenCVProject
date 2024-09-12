@@ -30,7 +30,9 @@ namespace OpenCVTest
         // 이미지, 동영상, 이미지 or 동영상
         private Mat image, frame, result;
 
+        // 동영상 출력
         private VideoCapture video;
+
 
         private CvsNetworkMonitor _Monitor;
 
@@ -40,7 +42,7 @@ namespace OpenCVTest
         private string SensorAddress;
 
         // 카메라1,2,3 / 그레이스케일 / 트리거
-        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag, BlurFlag, MoneyFlag;
+        private bool Ca1Flag, Ca2Flag, Ca3Flag, AffineFlag, BlurFlag, MoneyFlag, faceFlag;
 
         private RibbonCheckBox btnCheck;
 
@@ -64,7 +66,6 @@ namespace OpenCVTest
         CoordinatesXY xy = new CoordinatesXY();
 
         OpenFileDialog ofd = new OpenFileDialog();
-
         UserControlForm ucf;
         BlurControl bc;
 
@@ -80,6 +81,7 @@ namespace OpenCVTest
         {
             InitializeComponent();
 
+            // kit 초기화
             CvsInSightSoftwareDevelopmentKit.Initialize();
 
             Init();
@@ -87,15 +89,19 @@ namespace OpenCVTest
             frame = new Mat();
             result = new Mat();
 
+            // 마우스 줌인/아웃
             pictureBox1.MouseWheel += PictureBox1_MouseWheel;
+
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
 
+            // 스크롤바 100% 나타내기
             this.hScrollBar1.Maximum += this.hScrollBar1.LargeChange - 1;
 
             pictureBox1.DoubleClick += PictureBox1_DoubleClick;
 
+            // db 접속 연결
             db.connect();
-            MessageBox.Show(db.msg);
+            //MessageBox.Show(db.msg);
         }
 
         private int Bc_eventClose()
@@ -109,12 +115,14 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 이미지 초기화
         private int Bc_eventReturn()
         {
             SymmetryReturn();
             return 0;
         }
 
+        // 블러 BilateralFilter 이벤트
         private int Bc_eventBilateralFilter()
         {
             pictureBox1.Image = blur.btnBilateralFilter(result).ToBitmap();
@@ -122,6 +130,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 블러 가우시안블러 이벤트
         private int Bc_eventGaussianBlur()
         {
             pictureBox1.Image = blur.btnGaussianBlur(result).ToBitmap();
@@ -129,6 +138,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 블러 MedianBlur 이벤트
         private int Bc_eventMedianBlur()
         {
             pictureBox1.Image = blur.btnMedianBlur(result).ToBitmap();
@@ -136,6 +146,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 블러 BoxFilter 이벤트
         private int Bc_eventBoxFilter()
         {
             pictureBox1.Image = blur.btnBoxFilter(result).ToBitmap();
@@ -143,6 +154,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 블러 이벤트
         private int Bc_eventBlur()
         {
             pictureBox1.Image = blur.btnBlur(result).ToBitmap();
@@ -162,6 +174,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 초기화
         private int Ucf_eventSymmetryReturn()
         {
             SymmetryReturn();
@@ -169,6 +182,7 @@ namespace OpenCVTest
             return 0;
         }
 
+        // 4개의 점 입력 받기
         private int Ucf_eventSender()
         {
             pictureBox1.Image = openCV.GeometricImage(result).ToBitmap();
@@ -443,6 +457,7 @@ namespace OpenCVTest
                     cvsInSightDisplay1.InSight.LiveAcquisition = false;
 
                     cvsInSightDisplay1.Dispose();
+                    img.Dispose();
                 }
 
             }
@@ -450,6 +465,7 @@ namespace OpenCVTest
 
         }
 
+        // Congnex 출력값 바뀔때마다
         private void cvsInSightDisplay1_ResultsChanged(object sender, EventArgs e)
         {
             // Cognex 카메라가 촬영한 데이터를 resultSet에 할당
@@ -468,6 +484,7 @@ namespace OpenCVTest
 
         }
 
+        // 동전 검출 실행
         private void btnMoney_Click(object sender, EventArgs e)
         {
             if (MoneyFlag == false && pictureBox1.Image != null)
@@ -483,6 +500,8 @@ namespace OpenCVTest
 
         }
 
+        // 카메라 실행
+        FaceDetection face;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (video != null)
@@ -501,6 +520,18 @@ namespace OpenCVTest
                         result = CircleImg(frame);
                         pictureBox1.Image = result.ToBitmap();
                     }
+                    else if (faceFlag == true)
+                    {
+                        face = new FaceDetection();
+
+                        // 첫 번째 이미지 불러오기
+                        Mat m_src = Cv2.ImRead("C:\\Users\\user\\Desktop\\새 폴더 (2)\\dwqdwqfe.png", ImreadModes.Unchanged);
+
+                        pictureBox1.Image = face.haarface(frame, m_src).ToBitmap();
+
+                        // 리소스 해제
+                        m_src.Dispose();
+                    }
                     else
                     {
                         result = frame;
@@ -509,12 +540,13 @@ namespace OpenCVTest
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"OpenCVException 발생: {ex.Message}");
+                    MessageBox.Show($"타이머 : {ex.Message}");
                     video.Release();
                 }
             }
         }
 
+        // 동전 검출
         private Mat CircleImg(Mat src)
         {
             string coin = "";
@@ -550,10 +582,13 @@ namespace OpenCVTest
 
                 Cv2.PutText(dst, coin, new OpenCvSharp.Point(center.X - 20, center.Y - radius - 10), HersheyFonts.HersheySimplex, 1.0, Scalar.White, 1);
             }
+            img.Dispose();
+            imgresult.Dispose();
 
             return dst;
         }
 
+        // Congnex 버튼 활성화
         private void timer2_Tick(object sender, EventArgs e)
         {
             btnRibbon3.Enabled = true;
@@ -583,6 +618,7 @@ namespace OpenCVTest
             }
         }
 
+        // 이미지 자르기 모양
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -610,6 +646,7 @@ namespace OpenCVTest
 
         }
 
+        // 이미지 자를 시 마우스 이동값
         List<int> list;
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -636,6 +673,7 @@ namespace OpenCVTest
 
         }
 
+        // 이미지 자를 위치가 정해지면 더블클릭하여 위치값을 저장 후 이미지 출력
         private void PictureBox1_DoubleClick(object sender, EventArgs e)
         {
             Cursor = Cursors.Default;
@@ -666,6 +704,7 @@ namespace OpenCVTest
             Makeselection = false;
         }
 
+        // 자르기 버튼
         private void btnRibbonSet_Click(object sender, EventArgs e)
         {
             Makeselection = true;
@@ -681,6 +720,7 @@ namespace OpenCVTest
 
         }
 
+        // 이진화 트랙바 사용
         private void btnRibbonBinaryization_Click(object sender, EventArgs e)
         {
             // 기본 임계값
@@ -705,6 +745,7 @@ namespace OpenCVTest
 
         }
 
+        // 캐니엣지 트랙바 사용
         private void btnRibbonCannyEdge_Click(object sender, EventArgs e)
         {
             // 기본 임계값
@@ -729,6 +770,7 @@ namespace OpenCVTest
 
         }
 
+        // 코너 검출
         private void btnRibbonCorner_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -737,6 +779,7 @@ namespace OpenCVTest
                 return;
         }
 
+        // 코너 검출2
         private void btnRibbonApproxPoly_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -745,6 +788,7 @@ namespace OpenCVTest
                 return;
         }
 
+        // 기하학적 변환
         private void btnRibbonAffine_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -782,6 +826,7 @@ namespace OpenCVTest
 
         }
 
+        // 블러 버튼 / 클릭시 userControl 활성화
         private void btnBlur_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -817,6 +862,7 @@ namespace OpenCVTest
             }
         }
 
+        // 팽창
         private void Expansion_Click(object sender, EventArgs e)
         {
             // 기본 임계값
@@ -840,6 +886,7 @@ namespace OpenCVTest
             }
         }
 
+        // 침식
         private void Erosion_Click(object sender, EventArgs e)
         {
             // 기본 임계값
@@ -863,6 +910,7 @@ namespace OpenCVTest
             }
         }
 
+        // 기하학적 변환 위치값 전달
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             // pictrurebox 클릭으로 좌표 얻었을때
@@ -913,6 +961,7 @@ namespace OpenCVTest
             }
         }
 
+        // 확대
         private void ribbonUpDown_UpButtonClicked(object sender, MouseEventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -933,6 +982,7 @@ namespace OpenCVTest
 
         }
 
+        // 축소
         private void ribbonUpDown_DownButtonClicked(object sender, MouseEventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1060,10 +1110,10 @@ namespace OpenCVTest
             }
         }
 
-        // 회전
+        // 45도 회전
         private void btnRibbon45Rotation_Click(object sender, EventArgs e)
         {
-            result = BitmapConverter.ToMat((Bitmap)pictureBox1.Image);
+            //result = BitmapConverter.ToMat((Bitmap)pictureBox1.Image);
             if (pictureBox1 != null)
             {
                 try
@@ -1074,9 +1124,10 @@ namespace OpenCVTest
             }
         }
 
+        // 90도 회전
         private void btnRibbon90Rotation_Click(object sender, EventArgs e)
         {
-            result = BitmapConverter.ToMat((Bitmap)pictureBox1.Image);
+            //result = BitmapConverter.ToMat((Bitmap)pictureBox1.Image);
             if (pictureBox1 != null)
             {
                 try
@@ -1087,17 +1138,21 @@ namespace OpenCVTest
             }
         }
 
+        // 바코드를 읽고 해당값이 맞다면 DB에 저장
         int year;
         int month;
         private void btnBarCord_Click(object sender, EventArgs e)
         {
             string decoded = "";
             BarcodeReader reader = new BarcodeReader();
+            // 영상에 비친 코드 값을 가져온다
             Result result = reader.Decode((Bitmap)pictureBox1.Image);
 
             if (result != null)
             {
+                // 바코드의 13자리를 나눔
                 int[] num = { 2, 4, 2, 4, 1 };
+                // num의 위치값
                 int currentPosition = 0;
 
                 decoded = result.ToString() + "\r\n" + result.BarcodeFormat.ToString();
@@ -1187,6 +1242,10 @@ namespace OpenCVTest
                         }
                         else
                         {
+                            // 13자리의 끝자리를 제외 후 12자리의 홀,짝을 각각 더한 후 짝수는 3을 곱하고,
+                            // 홀,짝을 더한 다음 더한 값의 마지막 끝자리를 10에서 뺀다
+                            // 예: (12 + 12 * 3) = (12 + 36) = 48
+                            // 끝자리 8 ( 10 - 8 ) = 2
                             int oddSum = 0;
                             int evenSum = 0;
                             char[] arr = result.Text.ToCharArray();
@@ -1218,11 +1277,9 @@ namespace OpenCVTest
                 }
 
                 db.insert(company, product, production, date, test);
-
+                // 그리드뷰에 바인드
                 dataGridView1.DataSource = db.dt;
                 groupBox2.Visible = true;
-
-                //textBox1.Text = $"{company}\r\n {product}\r\n {production}\r\n {date}\r\n {test}";
 
                 MessageBox.Show($"{db.msg} : {year}");
             }
@@ -1234,6 +1291,20 @@ namespace OpenCVTest
             dataGridView1.DataSource = db.dt;
         }
 
+        private void btnFace_Click(object sender, EventArgs e)
+        {
+            if (faceFlag == false)
+            {
+                faceFlag = true;
+                timer1.Enabled = true;
+            } else
+            {
+                faceFlag = false;
+                timer1.Enabled = false;
+            }
+        }
+
+        // 원 검출
         private void btnCircleDetection_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1242,14 +1313,13 @@ namespace OpenCVTest
                 return;
         }
 
+        // 영어 번역
         int a, b;
         private void btnRibbonEnglish_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
                 Bitmap img = new Bitmap(pictureBox1.Image);
-
-
 
                 var ocr = new TesseractEngine("./tessdata", "eng", EngineMode.TesseractAndCube);
                 var texts = ocr.Process(img);
@@ -1277,6 +1347,7 @@ namespace OpenCVTest
 
         }
 
+        // 한글 번역
         private void btnRibbonHangul_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1294,6 +1365,7 @@ namespace OpenCVTest
             }
         }
 
+        // 모폴로지 열기
         private void OpenMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1306,6 +1378,7 @@ namespace OpenCVTest
             }
         }
 
+        // 모폴로지 닫기
         private void CloseMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1318,6 +1391,7 @@ namespace OpenCVTest
             }
         }
 
+        // 모폴로지 그라이언트
         private void GradientMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1330,6 +1404,7 @@ namespace OpenCVTest
             }
         }
 
+        // 탑햇
         private void TopHatMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1342,6 +1417,7 @@ namespace OpenCVTest
             }
         }
 
+        // 블랙햇
         private void BlackHatMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -1354,6 +1430,7 @@ namespace OpenCVTest
             }
         }
 
+        // 히트미스
         private void HitMissMorphology_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
