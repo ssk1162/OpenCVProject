@@ -198,7 +198,8 @@ namespace OpenCVTest
             Ca2Flag = false;
             Ca3Flag = false;
 
-            ofd.Filter = "All Files (*.*)|*.*|Files (*.jpg *.jpeg *.png)|*.jpg;*.jpeg;*.png;|Video Files (*.mp4 *.avi *.mov *.mkv *.wmv)|*.mp4;*.avi;*.mov;*.mkv;*.wmv;";
+            ofd.Filter = "All Files (*.*)|*.*|Files (*.jpg *.jpeg *.png)|*.jpg;*.jpeg;*.png;|" +
+                "Video Files (*.mp4 *.avi *.mov *.mkv *.wmv)|*.mp4;*.avi;*.mov;*.mkv;*.wmv;";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -266,6 +267,11 @@ namespace OpenCVTest
             }
         }
 
+        private void ribbonOrbClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         // USB 카메라1
         private void btnRibbon_Click(object sender, EventArgs e)
         {
@@ -302,6 +308,7 @@ namespace OpenCVTest
 
                 cbRibbonLive.Checked = false;
                 cbRibbonLive.Enabled = false;
+                // 이미지 자르기 좌표값 초기화
                 if (list != null)
                     list.Clear();
                 else
@@ -442,8 +449,7 @@ namespace OpenCVTest
                     frame.Dispose();
 
                 }
-                else
-                if (img1 != null && Ca3Flag == true)
+                else if (img1 != null && Ca3Flag == true)
                 {
                     Mat img = BitmapConverter.ToMat(img1);
                     result = img;
@@ -618,7 +624,7 @@ namespace OpenCVTest
             }
         }
 
-        // 이미지 자르기 모양
+        // 마우스 클릭 시 위치 값 저장 후 선 그리기
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -646,7 +652,7 @@ namespace OpenCVTest
 
         }
 
-        // 이미지 자를 시 마우스 이동값
+        // 이미지 자를 위치 값을 list에 저장하고 사각형 그리기
         List<int> list;
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -673,7 +679,7 @@ namespace OpenCVTest
 
         }
 
-        // 이미지 자를 위치가 정해지면 더블클릭하여 위치값을 저장 후 이미지 출력
+        // list에 저장된 위치 값을 가져와 SubMat을 사용하여 이미지의 특정부분을 가져온다
         private void PictureBox1_DoubleClick(object sender, EventArgs e)
         {
             Cursor = Cursors.Default;
@@ -681,21 +687,10 @@ namespace OpenCVTest
             try
             {
                 if (cropWidth < 1)
-                {
                     return;
-                }
-                Rectangle rect = new Rectangle(list[0], list[1], list[2], list[3]);
-                Bitmap originalImg = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
-                Bitmap _img = new Bitmap(list[2], list[3]);
-                Graphics g = Graphics.FromImage(_img);
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(originalImg, 0, 0, rect, GraphicsUnit.Pixel);
 
-                pictureBox1.Width = _img.Width;
-                pictureBox1.Height = _img.Height;
-                result = _img.ToMat();
+                result = result.SubMat(new OpenCvSharp.Rect(list[0], list[1], list[2], list[3]));
+
                 pictureBox1.Image = result.ToBitmap();
 
             }

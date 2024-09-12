@@ -220,6 +220,7 @@ namespace OpenCVTest
             this.ribbonOrbClose.Name = "ribbonOrbClose";
             this.ribbonOrbClose.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbClose.SmallImage")));
             this.ribbonOrbClose.Text = "Close";
+            this.ribbonOrbClose.Click += new System.EventHandler(this.ribbonOrbClose_Click);
             // 
             // ribbonTab1
             // 
@@ -271,7 +272,7 @@ namespace OpenCVTest
             this.btnRibbon3.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.LargeImage")));
             this.btnRibbon3.Name = "btnRibbon3";
             this.btnRibbon3.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnRibbon3.SmallImage")));
-            this.btnRibbon3.Text = "Camera3";
+            this.btnRibbon3.Text = "Cognex카메라";
             this.btnRibbon3.Click += new System.EventHandler(this.btnRibbon3_Click);
             // 
             // cbRibbonLive
