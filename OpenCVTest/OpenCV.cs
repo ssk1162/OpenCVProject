@@ -75,22 +75,15 @@ namespace OpenCVTest
                 Cv2.Circle(corner, pt, 5, Scalar.Yellow, Cv2.FILLED);
             }
 
-            //for (int i = 0; i < sub_corner.Length; i++)
-            //{
-            //    Point pt = new Point(sub_corner[i].X, sub_corner[i].Y);
-            //    Cv2.Circle(corner, pt, 5, Scalar.Red, Cv2.FILLED);
-            //}
-
             return corner;
         }
 
         // ApproxPoly를 사용하기 위해 만든거
         public Mat BinaryB(Mat src)
         {
-            bin = new Mat(src.Size(), MatType.CV_8UC1);
             gray = new Mat(src.Size(), MatType.CV_8UC1);
             Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
-            Cv2.Threshold(gray, bin, 190, 255, ThresholdTypes.Binary);
+            Cv2.Threshold(gray, gray, 190, 255, ThresholdTypes.Binary);
             return bin;
         }
 
@@ -156,7 +149,7 @@ namespace OpenCVTest
 
             Mat matrix = Cv2.GetPerspectiveTransform(srcPoint, dstPoint);
 
-            Cv2.WarpPerspective(bin, affine, matrix, src.Size(), InterpolationFlags.Linear, BorderTypes.Default, Scalar.All(0));
+            Cv2.WarpPerspective(bin, affine, matrix, src.Size(), InterpolationFlags.Linear, BorderTypes.Default, Scalar.Black);
 
             return affine;
         }
@@ -330,9 +323,7 @@ namespace OpenCVTest
         public Scalar GetColorScalar(string colorName)
         {
             // Vec3b = 3개의 byte를 가진 벡터이고, 이미지 색상 정보를 표현하는데 사용
-            // Item0 = Blue
-            // Item1 = Green
-            // Item2 = Red
+            // Item0 = Blue, Item1 = Green, Item2 = Red
             Vec3b hsvColor;
 
             switch (colorName)

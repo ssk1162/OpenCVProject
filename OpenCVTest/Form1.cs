@@ -1350,8 +1350,8 @@ namespace OpenCVTest
                 Bitmap img = new Bitmap(pictureBox1.Image);
                 var ocr = new TesseractEngine("./tessdata", "kor", EngineMode.Default);
                 var texts = ocr.Process(img);
-                ucf.label6.Text = "대문자 : ";
-                ucf.label7.Text = "소문자 : ";
+                //ucf.label6.Text = "대문자 : ";
+                //ucf.label7.Text = "소문자 : ";
                 ucf.label8.Text = texts.GetText();
             }
             else
